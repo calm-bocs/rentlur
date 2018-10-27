@@ -34,11 +34,15 @@ passport.use(
         }
         bcrypt.compare(password, user[0].password, function(err, res) {
           console.log(res);
-          user = user[0];
-          user.id = user.username;
-          delete user.password;
-          console.log(user);
-          done(null, user, { confirmation: "success", result: user });
+          if(res){
+            user = user[0];
+            user.id = user.username;
+            delete user.password;
+            console.log(user);
+            done(null, user, { confirmation: "success", result: user });
+          }else{
+            done(err, null, { confirmation: "failure", result: null });
+          }
         })
       })
       .catch(err => {
