@@ -29,7 +29,8 @@
 - Postgresql 
 - React
 - Babel/Webpack
-
+- Passport (Local Strategy)
+- 
 
 ## Development
 -TODO
