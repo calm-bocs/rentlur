@@ -4,8 +4,8 @@ const Knex = require('knex')
 //connects the database to objection
 const knexConnection = Knex(connection.development)
 Model.knex(knexConnection)
-
-//creates the relationship between the two tables
+//check out the docs on https://vincit.github.io/objection.js/#getting-started
+//creates the relationship between the two tables and lets you access objection methods
 class Property extends Model {
   static get tableName () {
     return 'properties'

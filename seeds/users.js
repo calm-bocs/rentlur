@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
+//populates the psql database after migration has been run with example data
 exports.seed = (knex, Promise) => {
-  // Deletes ALL existing entries
   return knex("users")
     .del()
     .then(() => knex("properties").del())
