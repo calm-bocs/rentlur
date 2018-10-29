@@ -10,24 +10,21 @@ class SavedRentals extends React.Component {
     };
   }
 
-
+// update
   componentDidUpdate() {
     if (this.state.favs !== this.props.saved) {
-      console.log('mounting yeahhh well updating')
       this.setState({
         favs: this.props.saved
       });
-      // this.props.favs();
     }
   }
+  
+  // mount
   componentDidMount() {
     this.props.favs();
- 
-      console.log('mounting yeahhh');
       this.setState({
         favs: this.props.saved
       });
-      // this.props.favs();
     
   }
 

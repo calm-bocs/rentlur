@@ -9,6 +9,7 @@ const SavedRentalItem = (props) => (
     <div onClick={() => {props.details(props.rental)}}>
       <NavLink to='/details'>Details</NavLink>
     </div>
+    {/* delete on click from db */}
     <button onClick={()=> props.delete(props.rental.id)}>Remove</button>
   </div>
 )

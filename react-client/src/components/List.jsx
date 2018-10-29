@@ -4,9 +4,6 @@ import ListItem from './ListItem.jsx';
 class List extends React.Component {
    constructor(props) {
      super(props);
-     this.state = {
-       selected: 0
-     };
    }
 
 

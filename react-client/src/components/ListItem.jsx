@@ -9,6 +9,7 @@ const ListItem = (props) => (
     <div onClick={() => {props.retrieve(props.rental)}}>
       <NavLink to='/details'>Details</NavLink>
     </div>
+    {/* save to users favs */}
     {props.username ?     
     (<button onClick={() => props.fav(props.rental)}>Save to favs</button>) : null}
 
