@@ -8,7 +8,7 @@
     "npm": "6.4.1"
   },
   "scripts": {
-    "start": "node server/index.js",
+    "start": "nodemon server/index.js",
     "heroku-postbuild": "webpack -p",
     "react": "webpack -d --watch",
     "server": "nodemon server/index.js",
