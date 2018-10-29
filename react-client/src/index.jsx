@@ -31,6 +31,8 @@ class App extends React.Component {
       rentals: [],
       savedRentals:[],
       details: [],
+      //cities was originally inserted to verify if the city has a craigslist subdomain
+      //It was never implemented though. 
       cities: cities,
     };
     this.searchProperties = this.searchProperties.bind(this);

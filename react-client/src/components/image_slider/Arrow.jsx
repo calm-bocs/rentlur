@@ -2,6 +2,7 @@ import React from 'react';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import ArrowForward from '@material-ui/icons/ArrowForward';
 
+// Arrows for the image carousel
 const Arrow = props => {
   const divStyle = {
     padding: "15px",

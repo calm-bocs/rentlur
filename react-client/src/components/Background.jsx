@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+//Never implemented anywhere.
 const Background = (props) => {
   const styles = {
     // // backgroundImage: `url(${props.imgUrl})`,
