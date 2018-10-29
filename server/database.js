@@ -1,3 +1,6 @@
+/*
+knex setup for access to localhost
+*/
 const knex = require("knex")({
   client: "postgres",
   connection: {

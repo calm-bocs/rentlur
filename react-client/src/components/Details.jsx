@@ -1,4 +1,5 @@
 import React from 'react';
+import ImgSlide from './image_slider/ImgSlide.jsx';
 
 class Details extends React.Component {
   constructor(props){
@@ -8,14 +9,10 @@ class Details extends React.Component {
     }
   }
 
-  // componentDidMount(){
-  //   this.setState({
-  //     details: this.props.details
-  //   });
-  // }
+// Needed for the craigslist scraper since pictures and urls weren't 
+// ready until after the others in the object. Not exactly sure why. 
   waitOnData(obj) {
-    // var str = JSON.stringify(obj);
-    // str = JSON.parse(str);
+
     if (!obj) {
       return '';
     }
@@ -33,6 +30,7 @@ class Details extends React.Component {
       <div>
       {console.log(this.props.details)}
         <h2>{this.props.details.title}</h2>
+        <ImgSlide imgUrls={this.props.details.images}/>
         <ul>
           <li>Price: {this.props.details.price} </li>
           <li>Description: {this.props.details.description} </li>
@@ -46,7 +44,6 @@ class Details extends React.Component {
     )
   }
 } 
-
 
 export default Details;
 

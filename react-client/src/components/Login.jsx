@@ -10,8 +10,7 @@ class Login extends React.Component {
 
     this.onUserChange = this.onUserChange.bind(this);
     this.onPassChange = this.onPassChange.bind(this);
-    this.onUserKeyPress = this.onUserKeyPress.bind(this);
-    this.onPassKeyPress = this.onPassKeyPress.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.reset = this.reset.bind(this);
   }
 
@@ -28,18 +27,12 @@ class Login extends React.Component {
     });
   }
   
-  onUserKeyPress(e) {
-    if (e.which === 13 && !this.flag) {
-      console.log(this.state.username, this.state.password);
-      this.reset();
-    }
-  }
 
-  onPassKeyPress(e) {
-    if (e.which === 13) {
-      console.log(this.state.username, this.state.password);
-      this.reset();
-    }
+  handleSubmit(e) {
+    this.props.login(this.state.username, this.state.password);
+    e.preventDefault();
+    this.props.history.push('/');
+    this.reset();
   }
 
   reset () {
@@ -52,14 +45,17 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className='usr-pss'>
+      <div className='login-block'>
+      <form onSubmit={this.handleSubmit}>
+      <div className='login-sign'>Login</div>
         <div>
-          username: <input type='username' value={this.state.username} onChange={this.onUserChange} onKeyPress={this.onUserKeyPress} placeholder='username'/>
+          <input type='username' value={this.state.username} onChange={this.onUserChange} placeholder='username'/>
         </div>
         <div>
-          password: <input type= "password" value={this.state.password} onChange={this.onPassChange} onKeyPress={this.onPassKeyPress} placeholder='password'/>
+          <input type= "password" value={this.state.password} onChange={this.onPassChange} placeholder='password'/>
         </div>
-        <button className='submit' onClick={()=> { console.log(this.state.username, this.state.password); this.reset(); }}>submit</button>
+        <input className='log-in-submit' type='submit' value='Submit'/>
+        </form>
       </div>
     )
   }

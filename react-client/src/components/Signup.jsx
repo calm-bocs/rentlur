@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -40,10 +41,20 @@ class Signup extends React.Component {
   }
 
   handleSubmit(e) {
-    console.log(this.state.name, this.state.email, this.state.username, this.state.password);
+    axios.post('/api/signup', {username: this.state.username, password: this.state.password})
+    .then ((response)=> {
+      if (response.data.name) {
+        alert('username exists!');
+      } else {
+        console.log(response);
+        alert('sign up successful!');
+        this.props.history.push('/login')
+      }
+    })
     e.preventDefault();
-    this.reset();
+    // this.reset();
   }
+
 
   reset () {
     this.setState({
@@ -57,11 +68,14 @@ class Signup extends React.Component {
   render() {
     return (
       <div className='signup-block'>
+        <div className='signup-sign'>Signup</div>
         <form onSubmit={this.handleSubmit}>
-          <input value={this.state.name} onChange={this.onNameChange} placeholder= 'name'/><br/>
-          <input value={this.state.email} onChange={this.onEmailChange} placeholder= 'email'/> <br/>
+
+          {/* <input value={this.state.name} onChange={this.onNameChange} placeholder= 'name'/><br/>
+          <input value={this.state.email} onChange={this.onEmailChange} placeholder= 'email'/> <br/> */}
           <input type='username' value={this.state.username} onChange={this.onUserChange} placeholder= 'username'/> <br/>
           <input type='password'  value={this.state.password} onChange={this.onPssChange} placeholder= 'password'/> <br/>
+
           <input className='sign-up-submit' type='submit' value='Submit'/>
         </form>
       </div>

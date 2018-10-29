@@ -1,6 +1,5 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-//const bcrypt = require('bcrypt');
 
 const getConnection = require("./database.js").getConnection;
 const bcrypt = require('bcrypt');
@@ -32,13 +31,12 @@ passport.use(
 
           return done(null, false, { message: "Incorrect username." });
         }
-        bcrypt.compare(password, user[0].password, function(err, res) {
+        bcrypt.compare(password, user[0].password, function(err, res) {   
           console.log(res);
           if(res){
             user = user[0];
-            user.id = user.username;
+            user.id = user.id;
             delete user.password;
-            console.log(user);
             done(null, user, { confirmation: "success", result: user });
           }else{
             done(err, null, { confirmation: "failure", result: null });

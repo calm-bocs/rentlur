@@ -12,7 +12,6 @@ const knex = getConnection();
 require("./auth");
 
 // authentication
-
 router.use(passport.initialize());
 router.use(passport.session());
 router.use(expressLogging(logger));
@@ -28,12 +27,10 @@ router.use(
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
   if ((req.authInfo.confirmation = "success")) {
-    console.log("Authenticated");
-    //What do I send to let the client know it succeeded to login?
-    res.send({ data: "Authenticated" });
+    res.send({ data: req.authInfo.result });
   } else {
     console.log("Failure to authenticate");
-    
+
     res.send({ data: "Failure" });
   }
 });
@@ -41,8 +38,9 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
 router.get("/logout", (req, res) => {
   console.log("requested to logout");
   req.logout();
-  res.redirect('/');
+  res.redirect("/");
 });
+
 router.post("/signup", (req, res) => {
   console.log("requested to signup");
   let password = req.body.password;
@@ -56,9 +54,10 @@ router.post("/signup", (req, res) => {
     console.log("encrypting password: ", password);
     knex("users")
       .insert([{ username: username, password: hash }])
-      .catch(err => console.log(err));
+      .then(res => res.send(JSON.stringify(res)))
+      .catch(err => res.send(JSON.stringify(err)));
   });
-  res.end();
+  // res.end();
 });
 
 module.exports = router;
