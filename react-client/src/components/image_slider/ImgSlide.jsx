@@ -15,8 +15,15 @@ export default class ImgSlide extends React.Component{
     this.nextSlide = this.nextSlide.bind(this);
     this.previousSlide = this.previousSlide.bind(this);
   }
+  componentDidUpdate(){
+    if(this.props.imageUrls !== this.state.imageUrls){
+      this.setState({imageUrls: this.props.imageUrls});
+    }
+
+  }
+
   componentDidMount(){
-    this.setState({imageUrls: this.props.imageUrls})
+    this.setState({imageUrls: this.props.imageUrls});
   }
 
   nextSlide(){

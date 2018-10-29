@@ -9,14 +9,10 @@ class Details extends React.Component {
     }
   }
 
-  // componentDidMount(){
-  //   this.setState({
-  //     details: this.props.details
-  //   });
-  // }
+// Needed for the craigslist scraper since pictures and urls weren't 
+// ready until after the others in the object. Not exactly sure why. 
   waitOnData(obj) {
-    // var str = JSON.stringify(obj);
-    // str = JSON.parse(str);
+
     if (!obj) {
       return '';
     }

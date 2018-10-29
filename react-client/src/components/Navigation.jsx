@@ -11,12 +11,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import CollectionBookmark from '@material-ui/icons/CollectionsBookmarkOutlined';
 import AccountCircle from '@material-ui/icons/AccountCircleOutlined';
-import { BrowserRouter, Route, Link, Switch , Redirect} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import List from '@material-ui/icons/ListAltSharp';
 import Close from '@material-ui/icons/CloseSharp';
 
 
-
+//Stylesheet for the navigation bar. 
+//Used in the withStyles method of material-ui when exporting
+//to inject the styles.
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -77,12 +79,12 @@ const styles = theme => ({
     },
   },
 });
+/////////////////////////////////////////////
 
 class Navigation  extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      search: '',
       anchorEl: null,
       location: '',
       submitted: false,
@@ -109,7 +111,6 @@ class Navigation  extends React.Component {
     this.setState({anchorEl: null});
   }
 
-
   changeState(loc) {
     this.setState({
       location: loc
@@ -126,18 +127,17 @@ class Navigation  extends React.Component {
 
   //Saves search query
   onChange(e) {
-    console.log(e.target.value)
     this.changeState(e.target.value);
   }
 
   //For Search Bar
   handleSubmit(e) {
-    console.log(this.state.location)
     this.props.search(this.state.location)
     e.preventDefault();
 
   }
 
+  // for setting location
   changeState(loc) {
     console.log(loc);
     this.setState({
@@ -149,8 +149,7 @@ class Navigation  extends React.Component {
     render(){
       const {anchorEl} = this.state;
       const {classes} = this.props;
-      return(
-
+      return (
         <div className={classes.root}>
         <AppBar position="static" >
             <Toolbar>
@@ -164,8 +163,7 @@ class Navigation  extends React.Component {
                   <div className={classes.searchIcon}>
                     <SearchIcon />
                   </div>
-
-                  <form onSubmit={this.handleSubmit} component={Link} to="/" >
+                <form onSubmit={this.handleSubmit} component={Link} to="/" >
                   <InputBase
                     placeholder="Search Location..."
                     classes={{
@@ -175,8 +173,7 @@ class Navigation  extends React.Component {
                     value = {this.state.location} 
                     onChange = {this.onChange} 
                     />
-
-                    </form>
+                  </form>
                 </div>
               
                 {/* Details */}
@@ -191,8 +188,6 @@ class Navigation  extends React.Component {
                   <CollectionBookmark/>
                 </IconButton>) : null}
 
-                
-                
                 {/* Login */}
                 {!this.props.username ?  
                   (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/login">
@@ -203,7 +198,6 @@ class Navigation  extends React.Component {
                   onClose={this.handleClose}
                   />
                 </IconButton>) : null}     
-
 
                 {/* Signup and Login drop down when user not logged in */}
                 <Menu
@@ -223,10 +217,10 @@ class Navigation  extends React.Component {
                 </IconButton> ): null}
             </Toolbar>
         </AppBar>
-        </div>
-
+      </div>
     )
-    }
-
+  }
 }
+
+//Export with injected styles through material-ui
 export default withStyles(styles)(Navigation);
