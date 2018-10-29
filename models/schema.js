@@ -2,7 +2,7 @@ const connection = require('../knexfile')
 const { Model } = require('objection')
 const Knex = require('knex')
 //connects the database to objection
-const knexConnection = Knex(connection.development)
+const knexConnection = Knex(connection.production)
 Model.knex(knexConnection)
 
 //creates the relationship between the two tables
