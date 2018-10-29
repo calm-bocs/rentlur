@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Image to be displayed in the image carousell
 const Image = (props) => {
   const styles = {
     // // backgroundImage: `url(${props.imgUrl})`,
