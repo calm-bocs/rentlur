@@ -158,7 +158,7 @@ class Navigation  extends React.Component {
                 </Typography>
                 <div className={classes.grow} />
 
-                {/* Search Bar */}
+                {/* Search Bar
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <SearchIcon />
@@ -177,16 +177,16 @@ class Navigation  extends React.Component {
                 </div>
               
                 {/* Details */}
-                {this.props.username ? 
+                {/* {this.props.username ? 
                 (<IconButton className={classes.Button} color="inherit" aria-label="Menu" component={Link} to="/details">
                   <List/>
                 </IconButton>) : null}
 
                 {/* Saved-Rentals */}
-                {this.props.username ?                 
+                {/* {this.props.username ?                 
                 (<IconButton className={classes.Button} color="inherit" aria-label="Menu" component={Link} to="/saved-rentals">
                   <CollectionBookmark/>
-                </IconButton>) : null}
+                </IconButton>) : null} */} 
 
                 {/* Login */}
                 {!this.props.username ?  

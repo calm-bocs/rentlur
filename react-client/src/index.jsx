@@ -5,15 +5,14 @@ import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
 
 // components
 import Search from './components/Search.jsx';
-import List from './components/List.jsx';
-import SavedRentals from './components/SavedRentals.jsx';
+//import List from './components/List.jsx';
+//import SavedRentals from './components/SavedRentals.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import NavBar from './components/NavBar.jsx';
-import Details from './components/Details.jsx';
+//import Details from './components/Details.jsx';
 import Background from './components/Background.jsx';
 import Navigation from './components/Navigation.jsx'
-import cities from '../data/cities.js';
 
 //Material UI
 import AppBar from '@material-ui/core/AppBar';
@@ -31,9 +30,6 @@ class App extends React.Component {
       rentals: [],
       savedRentals:[],
       details: [],
-      //cities was originally inserted to verify if the city has a craigslist subdomain
-      //It was never implemented though. 
-      cities: cities,
     };
     this.searchProperties = this.searchProperties.bind(this);
     this.retrieveDetails = this.retrieveDetails.bind(this);
@@ -148,16 +144,16 @@ class App extends React.Component {
               <div>
 
                 {/* <Search {...props} search={this.searchProperties}/> */}
-                <List {...props} retrieve={this.retrieveDetails} details={this.state.details} rentals={this.state.rentals} fav={this.addFavorite} username={this.state.username}/>
+                {/* <List {...props} retrieve={this.retrieveDetails} details={this.state.details} rentals={this.state.rentals} fav={this.addFavorite} username={this.state.username}/> */}
               </div>
             )
           }} />
-          <Route path='/saved-rentals' 
+          {/* <Route path='/saved-rentals' 
             render={(props) => <SavedRentals {...props} 
             saved={this.state.savedRentals} 
             favs={this.retrieveFavorites} 
             details={this.retrieveDetails} 
-            delete={this.deleteFavorite}/>}/>
+            delete={this.deleteFavorite}/>}/> */}
           <Route 
             path='/login' 
             render={(props) => <Login {...props} 
@@ -168,11 +164,15 @@ class App extends React.Component {
             render={(props) => <Signup {...props} 
             signup={this.signup} />}
             />
-          <Route   
+          {/* <Route   
             path='/details'
             render={(props) => <Details {...props} 
             details={this.state.details} />}
-          />
+          /> */}
+          {/* 
+            //add route for user/userid
+            //add route for public markers with user and category as query string  
+        */}
 
         </Switch>
 
