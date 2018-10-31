@@ -12,6 +12,7 @@ queries the user table for a specific passed in id
 router.get('/:UserId', (req, res) => {
   User.query().findById(req.params.UserId).eager('property')
   .then(result => res.json(result))
+  .catch(err => res.status(500).send())
 });
 
 /*
