@@ -10,7 +10,8 @@ module.exports = {
     client: 'pg',
     connection: {
       host: 'localhost',
-      user: 'postgres',
+      user: 'rentlurpg',
+      password: 'rentlurpgpass',
       database: 'rentlur',
     },
   },
