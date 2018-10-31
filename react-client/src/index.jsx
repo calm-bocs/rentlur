@@ -100,11 +100,14 @@ class App extends React.Component {
   }
 
   retrieveFavorites(user_id = sessionStorage.getItem('userId')) {
-    axios.get(`api/properties/${user_id}`)
-    .then(result => {
-      this.setState({savedRentals: result.data.property});
-    })
-    .catch(err => console.log(err));
+    console.log('fetching favorites for ID ' + user_id);
+    if(user_id) {
+      axios.get(`api/properties/${user_id}`)
+      .then(result => {
+        this.setState({savedRentals: result.data.property});
+      })
+      .catch(err => console.log(err));
+    }
   }
 
 
