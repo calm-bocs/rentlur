@@ -4,7 +4,7 @@ const { User, Property } = require('../models/schema');
 //router runs from the index.js file to keep it clean
 const router = express.Router();
 //dotenv allows access to .env files when deploying
-require('dotenv').config()
+//require('dotenv').config()
 /*
 queries the user table for a specific passed in id
   then grabs the properties that share that id in a array form
