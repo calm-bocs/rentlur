@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 //Local Files
-const search = require('./search.js');
+//const search = require('./search.js');
 const authRoutes = require('./authRoutes.js');
 const db = require('./db.js');
 
@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 
 //Routes
-app.use('/api/search', search);
+//app.use('/api/search', search);
 app.use('/api/properties', db);
 app.use('/api', authRoutes);
 
