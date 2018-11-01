@@ -25,6 +25,7 @@ app.use('/api', authRoutes);
 app.use(express.static(path.resolve(__dirname, '../react-client/dist')));
 
 app.get('/*', function(req, res) {
+  console.log('static file endpoint reached');
   res.sendFile(path.join(__dirname, '../react-client/dist/index.html'), function(err) {
     if (err) {
       res.status(500).send(err);
@@ -36,9 +37,9 @@ app.get('/*', function(req, res) {
 // Setup
 
 let port = process.env.PORT;
-if (port == null || port == "") {
+if (port === undefined || port === null || port === "") {
   port = 3000;
 }
 app.listen(port, () => {
-  console.log('listening on port 3000!');
+  console.log('listening on port ' + port + '!');
 });

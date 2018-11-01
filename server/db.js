@@ -12,9 +12,16 @@ queries the user table for a specific passed in id
   then grabs the properties that share that id in a array form
 */
 router.get('/:UserId', (req, res) => {
-  User.query().findById(req.params.UserId).eager('property')
-  .then(result => res.json(result))
-  .catch(err => res.status(500).send(err))
+  if (isNaN(req.params.UserId) ) {
+    res.status(300).send('Malformed user ID');
+  } else {
+    User.query().findById(req.params.UserId).eager('property')
+      .then(result => res.json(result))
+      .catch(err => {
+        console.log('Error finding user favorites:\n', err)
+        res.status(500).send();
+      })
+  }
 });
 
 

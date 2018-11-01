@@ -10,7 +10,7 @@ import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 // import NavBar from './components/NavBar.jsx';
 // import Details from './components/Details.jsx';
 // import Background from './components/Background.jsx';
-import Navigation from './components/Navigation.jsx']
+import Navigation from './components/Navigation.jsx'
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 
@@ -94,10 +94,14 @@ class App extends React.Component {
   }
 
   retrieveFavorites(user_id = sessionStorage.getItem('userId')) {
-    axios.get(`api/properties/${user_id}`)
-    .then(result => {
-      this.setState({savedRentals: result.data.property});
-    });
+    console.log('fetching favorites for ID ' + user_id);
+    if(user_id) {
+      axios.get(`api/properties/${user_id}`)
+      .then(result => {
+        this.setState({savedRentals: result.data.property});
+      })
+      .catch(err => console.log(err));
+    }
   }
 
 
