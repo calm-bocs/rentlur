@@ -1,29 +1,27 @@
 
-//Modules
+// modules
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-//Local Files
-//const search = require('./search.js');
-const authRoutes = require('./authRoutes.js');
-const db = require('./dbRoutes.js');
+// routers
+const authRouter = require('./authRoutes.js');
+const dbRouter = require('./dbRoutes.js');
 
-require('dotenv').config()
+// require('dotenv').config()
 const app = express();
 
-//Middleware
+// middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-//Routes
-//app.use('/api/search', search);
-app.use('/api/properties', db);
-app.use('/api', authRoutes);
+// routes
+app.use('/api/favorites', dbRouter);
+app.use('/api', authRouter);
+
 
 app.use(express.static(path.resolve(__dirname, '../react-client/dist')));
-
 app.get('/*', function(req, res) {
   console.log('static file endpoint reached');
   res.sendFile(path.join(__dirname, '../react-client/dist/index.html'), function(err) {

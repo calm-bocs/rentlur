@@ -8,13 +8,13 @@
     "npm": "6.4.1"
   },
   "scripts": {
-    "start": "node server/index.js",
+    "start": "node server/server.js",
     "heroku-postbuild": "webpack -p",
     "react": "webpack -d --watch",
-    "server": "nodemon server/index.js",
+    "server": "nodemon server/server.js",
     "create-db": "createdb rentlur; knex migrate:latest; knex seed:run"
   },
-  "author": "Meme Stream Dream Team",
+  "author": "CALM-BOCS",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.2",

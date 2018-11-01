@@ -33,29 +33,32 @@ class App extends React.Component {
     };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-    this.searchProperties = this.searchProperties.bind(this);
-    this.retrieveDetails = this.retrieveDetails.bind(this);
+    //this.searchProperties = this.searchProperties.bind(this);
     // this.signup = this.signup.bind(this);
-    this.addFavorite = this.addFavorite.bind(this);
-    this.retrieveFavorites = this.retrieveFavorites.bind(this);
-    this.deleteFavorite = this.deleteFavorite.bind(this);
+    //this.addFavorite = this.addFavorite.bind(this);
+    //this.retrieveFavorites = this.retrieveFavorites.bind(this);
+    //this.deleteFavorite = this.deleteFavorite.bind(this);
+    this.dummyFavoritesPublic = this.dummyFavoritesPublic.bind(this);
+    this.dummyFavoritesUser = this.dummyFavoritesUser.bind(this);
   }
  
   // to be completed later
 
   componentDidMount() {
-    this.setState({
-      username: sessionStorage.getItem('username') || '',
-      userId: sessionStorage.getItem('userId') || 0
-    }, () => this.retrieveFavorites());
+    this.dummyFavoritesPublic();
+    this.dummyFavoritesUser();
+    // this.setState({
+    //   username: sessionStorage.getItem('username') || '',
+    //   userId: sessionStorage.getItem('userId') || 0
+    // }, () => this.retrieveFavorites());
   }
 
-  searchProperties(searchQuery) {
-   console.log(searchQuery);
-    axios.post('/api/search', {city: searchQuery}).then((response) => {
-      this.setState({ rentals: response.data });
-    });
-  }
+  // searchProperties(searchQuery) {
+  //  console.log(searchQuery);
+  //   axios.post('/api/search', {city: searchQuery}).then((response) => {
+  //     this.setState({ rentals: response.data });
+  //   });
+  // }
 
   login(usr, pss) {
     axios.post('/api/login', {username: usr, password: pss})
@@ -82,28 +85,47 @@ class App extends React.Component {
 
 
 
-  addFavorite(property, user_id = sessionStorage.getItem('userId')) {
-    console.log(user_id);
-    axios.post(`api/properties/${user_id}`, property)
-    .then(result => console.log(result));
-  }
+  // addFavorite(property, user_id = sessionStorage.getItem('userId')) {
+  //   console.log(user_id);
+  //   axios.post(`api/properties/${user_id}`, property)
+  //   .then(result => console.log(result));
+  // }
 
-  deleteFavorite(property_id, user_id = sessionStorage.getItem('userId')) {
-    axios.delete(`api/properties/${user_id}/${property_id}`)
-    .then(result => this.retrieveFavorites(user_id));
-  }
+  // deleteFavorite(property_id, user_id = sessionStorage.getItem('userId')) {
+  //   axios.delete(`api/properties/${user_id}/${property_id}`)
+  //   .then(result => this.retrieveFavorites(user_id));
+  // }
 
-  retrieveFavorites(user_id = sessionStorage.getItem('userId')) {
-    // check that user id exists before making call
-    console.log('fetching favorites for ID ' + user_id);
-    if(user_id) {
-      axios.get(`api/properties/${user_id}`)
-      .then(result => {
-        this.setState({savedRentals: result.data.property});
-      })
+  // retrieveFavorites(user_id = sessionStorage.getItem('userId')) {
+  //   // check that user id exists before making call
+  //   console.log('fetching favorites for ID ' + user_id);
+  //   if(user_id) {
+  //     axios.get(`api/properties/${user_id}`)
+  //     .then(result => {
+  //       this.setState({savedRentals: result.data.property});
+  //     })
+  //     .catch(err => console.log(err));
+  //   }
+  // }
+
+
+    dummyFavoritesPublic() {
+    console.log(`making call to server route api/properties/public`);
+      axios.get(`api/favorites/public`)
+      .then(data => 
+        console.log(`result returned from call to db for public favorites: ${JSON.stringify(data)}`)  
+      )
       .catch(err => console.log(err));
     }
-  }
+
+    dummyFavoritesUser() {
+      console.log(`making call to server route api/properties/`);
+        axios.get(`api/favorites/`)
+        .then(data => 
+          console.log(`result returned from call to db for user favorites: ${JSON.stringify(data)}`)  
+        )
+        .catch(err => console.log(err));
+      }
 
 
   
