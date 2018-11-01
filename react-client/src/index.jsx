@@ -94,6 +94,7 @@ class App extends React.Component {
   }
 
   retrieveFavorites(user_id = sessionStorage.getItem('userId')) {
+    // check that user id exists before making call
     console.log('fetching favorites for ID ' + user_id);
     if(user_id) {
       axios.get(`api/properties/${user_id}`)
