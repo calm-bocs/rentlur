@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Switch, withRouter } from 'react-router-dom';
 
 // components
 // import Search from './components/Search.jsx';
@@ -13,6 +13,8 @@ import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import Navigation from './components/Navigation.jsx'
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
+import MapContainer from './components/MapContainer.jsx';
+import Redirector from './components/Redirector.jsx';
 
 // Material UI
 // import AppBar from '@material-ui/core/AppBar';
@@ -70,7 +72,6 @@ class App extends React.Component {
       alert('Logged In Successfully!');
       sessionStorage.setItem('username', response.data.data.username);
       sessionStorage.setItem('userId', response.data.data.id);
-      
     })
     .catch((err) => alert('Incorrect username or password'));
   }
@@ -183,6 +184,13 @@ class App extends React.Component {
             render={(props) => <Signup {...props} 
             signup={this.signup} />}
             />
+          <Route path='/map' render={(props) => {
+            if(sessionStorage.getItem('userId')) {
+              return <MapContainer {...props}/>
+            } else {
+              return <Redirector />
+            }
+          }} />
           {/* <Route   
             path='/details'
             render={(props) => <Details {...props} 
@@ -193,6 +201,11 @@ class App extends React.Component {
             //add route for public markers with user and category as query string  
         */}
 
+          {/*default path to hide potentially sensitive routes*/}
+          <Route 
+            path='/*'
+            render={(props) => <Redirector />}
+          />
         </Switch>
 
         </div>

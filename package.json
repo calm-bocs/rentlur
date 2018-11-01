@@ -45,6 +45,7 @@
     "express": "^4.16.4",
     "express-logging": "^1.1.1",
     "express-session": "*",
+    "google-maps-react": "^2.0.2",
     "knex": "^0.15.2",
     "logops": "^2.1.0",
     "objection": "^1.4.0",
