@@ -8,10 +8,10 @@
     "npm": "6.4.1"
   },
   "scripts": {
-    "start": "node server/index.js",
+    "start": "node server/server.js",
     "heroku-postbuild": "webpack -p",
     "react": "webpack -d --watch",
-    "server": "nodemon server/index.js",
+    "server": "nodemon server/server.js",
     "create-db": "createdb rentlur; knex migrate:latest; knex seed:run"
   },
   "author": "Meme Stream Dream Team",
@@ -45,6 +45,7 @@
     "express": "^4.16.4",
     "express-logging": "^1.1.1",
     "express-session": "*",
+    "google-maps-react": "^2.0.2",
     "knex": "^0.15.2",
     "logops": "^2.1.0",
     "objection": "^1.4.0",
