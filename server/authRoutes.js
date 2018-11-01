@@ -19,7 +19,7 @@ router.use(expressLogging(logger));
 router.use(cookieParser());
 router.use(
   session({
-    secret: "MemesAreCool",
+    secret: "something normal",
     resave: false,
     saveUninitialized: true
   })
