@@ -4,14 +4,14 @@ import axios from 'axios';
 import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
 
 // components
-import Search from './components/Search.jsx';
+//import Search from './components/Search.jsx';
 //import List from './components/List.jsx';
 //import SavedRentals from './components/SavedRentals.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
-import NavBar from './components/NavBar.jsx';
+//import NavBar from './components/NavBar.jsx';
 //import Details from './components/Details.jsx';
-import Background from './components/Background.jsx';
+//import Background from './components/Background.jsx';
 import Navigation from './components/Navigation.jsx'
 
 //Material UI
@@ -48,8 +48,8 @@ class App extends React.Component {
     this.setState({
       username: sessionStorage.getItem('username') || '',
       userId: sessionStorage.getItem('userId') || 0
-    });
-    this.retrieveFavorites();
+    }, () => this.retrieveFavorites());
+    
   }
 
 
@@ -100,10 +100,14 @@ class App extends React.Component {
   }
 
   retrieveFavorites(user_id = sessionStorage.getItem('userId')) {
-    axios.get(`api/properties/${user_id}`)
-    .then(result => {
-      this.setState({savedRentals: result.data.property});
-    });
+    console.log('fetching favorites for ID ' + user_id);
+    if(user_id) {
+      axios.get(`api/properties/${user_id}`)
+      .then(result => {
+        this.setState({savedRentals: result.data.property});
+      })
+      .catch(err => console.log(err));
+    }
   }
 
 
