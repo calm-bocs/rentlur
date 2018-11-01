@@ -1,12 +1,12 @@
 # Project Names
 
-> Rentlur: Rental property search aggregator.
+> 
 
 ## Team
 
-  - __Product Owner__: John Warren
-  - __Scrum Master__: Nik Mentakis
-  - __Development Team Members__: Guillermo Maycotte, Steven Myers 
+  - __Product Owner__:
+  - __Scrum Master__:
+  - __Development Team Members__:
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@
 
 ## Usage
 
-> Search for rental properties by location and click to save favorites.
+> 
 
 ## Requirements
 
@@ -30,10 +30,10 @@
 - React
 - Babel/Webpack
 - Passport (Local Strategy)
-- 
 
 ## Development
 -TODO
+
 ### Installing Dependencies
 
 From within the root directory:
@@ -42,12 +42,3 @@ From within the root directory:
 npm install
 npm start
 ```
-
-### Roadmap
-
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
-
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.

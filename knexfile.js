@@ -6,7 +6,7 @@ knex setup for access to localhost and production version of the repo
 */
 let config = {};
 try {
-  config = require('../config.js');
+  config = require('./config.js');
 } catch (err) {
 }
 module.exports = {

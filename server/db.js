@@ -5,6 +5,8 @@ const { User, Property } = require('../models/schema');
 const router = express.Router();
 //dotenv allows access to .env files when deploying
 //require('dotenv').config()
+
+
 /*
 queries the user table for a specific passed in id
   then grabs the properties that share that id in a array form
@@ -12,7 +14,9 @@ queries the user table for a specific passed in id
 router.get('/:UserId', (req, res) => {
   User.query().findById(req.params.UserId).eager('property')
   .then(result => res.json(result))
+  .catch(err => res.status(500).send(err))
 });
+
 
 /*
 async await version for posting to the properties table
@@ -27,9 +31,9 @@ router.post('/:UserId', async (req, res) => {
   await user.$relatedQuery('property')
     .allowInsert('[pid, location, title, price, url, hasPic, date, category]')
     .insert(req.body)
-
-   res.send('Complete');
+   res.status(201).send('post successful');
 });
+
 
 /*
 async await version for deleting from the properties table
