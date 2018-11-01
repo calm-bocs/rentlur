@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 
 // components
-//import Search from './components/Search.jsx';
-//import List from './components/List.jsx';
-//import SavedRentals from './components/SavedRentals.jsx';
+// import Search from './components/Search.jsx';
+// import List from './components/List.jsx';
+// import SavedRentals from './components/SavedRentals.jsx';
+// import NavBar from './components/NavBar.jsx';
+// import Details from './components/Details.jsx';
+// import Background from './components/Background.jsx';
+import Navigation from './components/Navigation.jsx'
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
-//import NavBar from './components/NavBar.jsx';
-//import Details from './components/Details.jsx';
-//import Background from './components/Background.jsx';
-import Navigation from './components/Navigation.jsx'
 
-//Material UI
-import AppBar from '@material-ui/core/AppBar';
-import Grid from '@material-ui/core/Grid';
+// Material UI
+// import AppBar from '@material-ui/core/AppBar';
+// import Grid from '@material-ui/core/Grid';
 
 
 
@@ -31,11 +31,11 @@ class App extends React.Component {
       savedRentals:[],
       details: [],
     };
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
     this.searchProperties = this.searchProperties.bind(this);
     this.retrieveDetails = this.retrieveDetails.bind(this);
-    this.login = this.login.bind(this);
     // this.signup = this.signup.bind(this);
-    this.logout = this.logout.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.retrieveFavorites = this.retrieveFavorites.bind(this);
     this.deleteFavorite = this.deleteFavorite.bind(this);
@@ -44,15 +44,11 @@ class App extends React.Component {
   // to be completed later
 
   componentDidMount() {
-    // this.retrieveFavorites();
     this.setState({
       username: sessionStorage.getItem('username') || '',
       userId: sessionStorage.getItem('userId') || 0
     }, () => this.retrieveFavorites());
-    
   }
-
-
 
   searchProperties(searchQuery) {
    console.log(searchQuery);
@@ -60,8 +56,6 @@ class App extends React.Component {
       this.setState({ rentals: response.data });
     });
   }
-
-
 
   login(usr, pss) {
     axios.post('/api/login', {username: usr, password: pss})
@@ -144,9 +138,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' render={(props) => { 
             return (
-
               <div>
-
                 {/* <Search {...props} search={this.searchProperties}/> */}
                 {/* <List {...props} retrieve={this.retrieveDetails} details={this.state.details} rentals={this.state.rentals} fav={this.addFavorite} username={this.state.username}/> */}
               </div>

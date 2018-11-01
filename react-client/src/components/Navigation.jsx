@@ -88,7 +88,7 @@ class Navigation  extends React.Component {
       anchorEl: null,
       location: '',
       submitted: false,
-
+// open property?
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);

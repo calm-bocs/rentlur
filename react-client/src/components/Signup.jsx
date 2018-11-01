@@ -10,7 +10,6 @@ class Signup extends React.Component {
       username: '',
       password: ''
     }
-
     this.onNameChange =this.onNameChange.bind(this);
     this.onEmailChange =this.onEmailChange.bind(this);
     this.onUserChange =this.onUserChange.bind(this);
@@ -19,6 +18,7 @@ class Signup extends React.Component {
     this.reset = this.reset.bind(this);
   }
 
+  // refactor the following four functions to be handled by the same handler
   onNameChange(e) {
     this.setState({
       name: e.target.value
