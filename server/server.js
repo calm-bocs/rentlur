@@ -7,7 +7,7 @@ const path = require('path');
 //Local Files
 //const search = require('./search.js');
 const authRoutes = require('./authRoutes.js');
-const db = require('./db.js');
+const db = require('./dbRoutes.js');
 
 require('dotenv').config()
 const app = express();

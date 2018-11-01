@@ -25,14 +25,15 @@ exports.up = function (knex, Promise) {
     })
     .createTable('properties', (table) => {
       table.increments('id').primary();
-      table.string('pid');//
-      table.string('category');
-      table.string('location');//
-      table.string('title');
-      table.string('price');//
-      table.string('url');//
-      table.boolean('hasPic')//
-      table.string('date');//
+      // add a field for coordinates - stringified object/array tbd
+      table.string('pid');//delete
+      table.string('category'); // keep as is
+      table.string('location');//keep as is - street address input by user
+      table.string('title');//(rename description)
+      table.string('price');// delete
+      table.string('url');// delete
+      table.boolean('hasPic')// keep for now
+      table.string('date');// keep - timestamp for when row is added
       table.integer('user_id').references('id').inTable('users').notNull()
         .onDelete('cascade');
     });

@@ -1,3 +1,6 @@
+// ADJSUT BASED ON MIGRATION CHANGES
+
+
 const connection = require('../knexfile')
 const { Model } = require('objection')
 const Knex = require('knex')
