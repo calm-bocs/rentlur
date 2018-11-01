@@ -9,6 +9,11 @@ class MapContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    this.props.getDataByType();
   }
 
   render() {
@@ -20,14 +25,23 @@ class MapContainer extends React.Component {
       lat: 30.28,
       lng: -97.7431
     }
+    const markers = this.props.favorites.map(fav => {
+      let favLoc = JSON.parse(fav.coordinates);
+      fav.position = {};
+      fav.position.lat = parseFloat(favLoc.latitude);
+      fav.position.lng = parseFloat(favLoc.longitude);
+      return fav;
+    });
     return (
       <div className='mapholder'>
-        <Map 
+        <Map
           google={this.props.google}
           zoom={11}
           style={style}
           initialCenter={testLocation}
-        />
+        >
+          {markers.map(marker => (<Marker key={marker.id} position={marker.position}/>))}
+        </Map>
       </div>
     )
   }
