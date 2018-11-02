@@ -8,7 +8,8 @@ class MapContainer extends React.Component {
     super(props);
     this.state = {
       activeMarker: null,
-      showingInfoWindow: false
+      showingInfoWindow: false,
+      activeData: {}
     }
     this.setActiveMarker = this.setActiveMarker.bind(this);
   }
@@ -21,11 +22,9 @@ class MapContainer extends React.Component {
     this.props.getDataByType();
   }
   setActiveMarker(props, marker, e) {
-    if(this.state.activeData && props.id === this.state.activeData.id) {
-      this.setState({showingInfoWindow: !this.state.showingInfoWindow})
-    } else {
-      this.setState({activeMarker: marker, showingInfoWindow: true, activeData: props.data})
-    }
+    console.log('Current active: ', this.state.activeData);
+    console.log('Clicked marker:', props.data)
+    this.setState({activeMarker: marker, showingInfoWindow: true, activeData: props.data})
   }
 
   render() {
@@ -60,13 +59,12 @@ class MapContainer extends React.Component {
               data={marker}>
             </Marker>)
           )}
-          {this.state.activeMarker ? 
-            <InfoWindow 
+          <InfoWindow 
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
               >
                 <span>{this.state.activeData.description}</span>
-            </InfoWindow> : ''}
+          </InfoWindow>
         </Map>
       </div>
     )
