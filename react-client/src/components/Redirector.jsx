@@ -6,10 +6,10 @@ class Redirector extends React.Component {
     super(props);
   }
   componentDidMount() {
-    this.props.history.push('/');
+    this.props.history.replace('/');
   }
   render() {
-    return (<div>Not logged in! Returning to entrance page...</div>)
+    return (<div>Returning to entrance page...</div>)
   } 
 }
 

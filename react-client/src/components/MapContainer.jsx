@@ -19,7 +19,7 @@ class MapContainer extends React.Component {
   }
 
   fetchData() {
-    this.props.getDataByType();
+    //this.props.getDataByType();
   }
   setActiveMarker(props, marker, e) {
     console.log('Current active: ', this.state.activeData);
@@ -29,8 +29,8 @@ class MapContainer extends React.Component {
 
   render() {
     const style = {
-      width: '50vw',
-      height: '50vh'
+      width: '50%',
+      height: '75%'
     }
     const testLocation = {
       lat: 30.28,

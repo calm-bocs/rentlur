@@ -152,12 +152,12 @@ class Navigation  extends React.Component {
         <AppBar position="static" >
             <Toolbar>
                 <Typography variant="h5" className={classes.title} variant="title" color="inherit" component={Link} to="/">
-                Rentlur
+                BOCS Project
                 </Typography>
                 <div className={classes.grow} />
 
                 {/* Login */}
-                {!this.props.username ?  
+                {!sessionStorage.getItem('userId') ?  
                   (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/login">
                   <AccountCircle 
                   aria-owns={anchorEl ? 'menu' : undefined}
@@ -168,7 +168,7 @@ class Navigation  extends React.Component {
                 </IconButton>) : null}     
 
                 {/* Signup and Login drop down when user not logged in */}
-                <Menu
+                {/* <Menu
                 id='menu'
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
@@ -176,10 +176,10 @@ class Navigation  extends React.Component {
                 >
                 <MenuItem onClick={this.handleClose} component={Link} to="/signup">Signup</MenuItem>
                 <MenuItem onClick={this.handleClose} component={Link} to="/login">Login</MenuItem>
-                </Menu>        
+                </Menu>         */}
 
                 {/* Logout */}
-                {this.props.username ?                 
+                {sessionStorage.getItem('userId') ?                 
                 (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/logout">
                   <Close onClick={this.props.logout}/>
                 </IconButton> ): null}

@@ -30,8 +30,9 @@ import { BrowserRouter, Route, Link, Switch, withRouter } from 'react-router-dom
 import Navigation from './components/Navigation.jsx'
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
-//import MapContainer from './components/MapContainer.jsx';
 import Redirector from './components/Redirector.jsx';
+import Landing from './components/Landing.jsx';
+import Home from './components/Home.jsx';
 
 
 
@@ -165,31 +166,34 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
-          <Navigation username={this.state.username} logout={this.logout}/>
-          <div className='main'> 
-          <Switch>
-            <Route exact path='/' render={(props) => { 
-              return (
-                <div>
-                </div>
-              )
-            }} />
-            <Route 
-              path='/login' 
-              render={(props) => <Login {...props} 
-              login={this.login} />}
-            />
-          <Route path='/map/private' render={(props) => {
-            if(sessionStorage.getItem('userId')) {
-              return <MapContainer {...props} getDataByType={this.dummyFavoritesUser} favorites={this.state.favorites}/>
-            } else {
-              console.log('Un-logged user attempting to access maps');
-              return <Redirector />
-            }
-          }}
+
+      <div>
+        
+        <Switch>
+          <Route exact path='/' 
+            render={(props) => <Landing logout={this.logout}/>} 
           />
-         
+          <Route 
+            path='/login' 
+            render={(props) => <Login {...props} 
+              login={this.login} />}
+          />
+          <Route 
+            path='/signup' 
+            render={(props) => <Signup {...props} 
+              signup={this.signup} />}
+          />
+          <Route
+            path='/map'
+            render={(props) => (
+                <Home {...props}
+                  favorites={this.state.favorites} 
+                  getPublic={this.dummyFavoritesPublic}
+                  getPrivate={this.dummyFavoritesUser}
+                  logout={this.logout}
+                  username={this.state.username}/>
+              )}
+            />
 
           {/*default path to hide potentially sensitive routes*/}
           <Route 
@@ -198,7 +202,6 @@ class App extends React.Component {
           />
         </Switch>
 
-        </div>
         </div>
       </BrowserRouter>
 
