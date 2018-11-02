@@ -20,9 +20,9 @@ class Login extends Component {
   }
   
 
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.login(this.state.username, this.state.password);
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.login(this.state.username, this.state.password, this.props.history);
     this.reset();
   }
 

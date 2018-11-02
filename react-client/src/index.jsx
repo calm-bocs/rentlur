@@ -39,9 +39,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // don't need to keep any state here...
-      // username: '',
-      // userId: 0,
+      username: '',
+      userId: 0,
+      favorites: [],
     };
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
@@ -56,7 +56,8 @@ class App extends React.Component {
   // once refactored, the top level indexjs will likely just be a router to either landing component or home component
   // likely will not have a component did mount called until logged in and on home page
   componentDidMount() {
-    this.login('Chris', 'Chris');
+    //this.dummyFavoritesPublic();
+    //this.dummyFavoritesUser();
     // this.setState({
     //   username: sessionStorage.getItem('username') || '',
     //   userId: sessionStorage.getItem('userId') || 0
@@ -85,7 +86,18 @@ class App extends React.Component {
       console.log(`login function success response`, response);
       // alert('Logged In Successfully!');
       // redirect to home page
+      // this.setState({
+      //   username: response.data.data.username,
+      //   userId: response.data.data.id
+      // })
+      // alert('Logged In Successfully!');
+      // sessionStorage.setItem('username', response.data.data.username);
+      // sessionStorage.setItem('userId', response.data.data.id);
+      // console.log('Logged in as userId ' + sessionStorage.getItem('userId'));
+      history.push('/map/private');
+
       this.dummyFavoritesUser();
+
     })
     .catch((err) => alert('Incorrect username or password'));
   }
@@ -138,10 +150,13 @@ class App extends React.Component {
 
     dummyFavoritesUser() {
       console.log(`making call to server route api/properties/`);
-        axios.get(`api/favorites/`)
-        .then(data => 
-          console.log(`result returned from call to db for user favorites: ${JSON.stringify(data)}`)  
-        )
+        axios.get(`/api/favorites/`)
+        .then(response => {
+          console.log(`result returned from call to db for user favorites:`, response.data);
+          this.setState({favorites: response.data.favorite}, () => {
+            console.log('Favorites changed, new favorites:', this.state.favorites)
+          })
+        })
         .catch(err => console.log(err));
       }
 
@@ -165,25 +180,25 @@ class App extends React.Component {
               render={(props) => <Login {...props} 
               login={this.login} />}
             />
-            <Route 
-              path='/signup' 
-              render={(props) => <Signup {...props} 
-              signup={this.signup} />}
-              />
-            {/* <Route path='/map' render={(props) => {
-              if(sessionStorage.getItem('userId')) {
-                return <MapContainer {...props}/>
-              } else {
-                return <Redirector />
-              }
-            }} /> */}
-            {/*default path to hide potentially sensitive routes*/}
-            <Route 
-              path='/*'
-              render={(props) => <Redirector />}
-            />
-          </Switch>
-          </div>
+          <Route path='/map/private' render={(props) => {
+            if(sessionStorage.getItem('userId')) {
+              return <MapContainer {...props} getDataByType={this.dummyFavoritesUser} favorites={this.state.favorites}/>
+            } else {
+              console.log('Un-logged user attempting to access maps');
+              return <Redirector />
+            }
+          }}
+          />
+         
+
+          {/*default path to hide potentially sensitive routes*/}
+          <Route 
+            path='/*'
+            render={(props) => <Redirector />}
+          />
+        </Switch>
+
+        </div>
         </div>
       </BrowserRouter>
 
