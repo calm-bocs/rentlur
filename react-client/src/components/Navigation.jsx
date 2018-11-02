@@ -17,7 +17,8 @@ import AccountCircle from '@material-ui/icons/AccountCircleOutlined';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/icons/ListAltSharp';
 import Close from '@material-ui/icons/CloseSharp';
-
+import Tab from '@material-ui/core/Tab';
+import TabBar from '@material-ui/core/Tabs';
 
 //Stylesheet for the navigation bar. 
 //Used in the withStyles method of material-ui when exporting
@@ -155,6 +156,11 @@ class Navigation  extends React.Component {
                 BOCS Project
                 </Typography>
                 <div className={classes.grow} />
+
+                <TabBar centered>
+                  <Tab onClick={this.handleClick} component={Link} to="/map/private" label='Private' />
+                  <Tab onClick={this.handleClick} component={Link} to="/map/public" label='Public' />
+                </TabBar>
 
                 {/* Login */}
                 {!sessionStorage.getItem('userId') ?  

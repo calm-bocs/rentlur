@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link, Switch, withRouter } from 'react-router-dom';
 import MapContainer from './MapContainer.jsx';
 import PrivateHeader from './PrivateHeader.jsx';
+import PublicHeader from './PublicHeader.jsx';
 import Navigation from './Navigation.jsx';
 import Redirector from './Redirector.jsx';
 
@@ -18,7 +19,7 @@ const Home = (props) => {
                 <PrivateHeader getPrivate={props.getPrivate}/>
               </Route>
               <Route path='/map/public'>
-                {/*props.getPublic() ? '' : ''*/''}
+                <PublicHeader getPublic={props.getPublic}/>
               </Route>
             </Switch>
       </BrowserRouter>

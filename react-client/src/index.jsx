@@ -146,10 +146,11 @@ class App extends React.Component {
 
     dummyFavoritesPublic() {
     console.log(`making call to server route api/properties/public`);
-      axios.get(`api/favorites/public`)
-      .then(data => 
-        console.log(`result returned from call to db for public favorites: ${JSON.stringify(data)}`)  
-      )
+      axios.get(`/api/favorites/public`)
+      .then(response => {
+        console.log(`result returned from call to db for public favorites: `, response.data);
+        this.setState({favorites: response.data})  
+      })
       .catch(err => console.log(err));
     }
 
