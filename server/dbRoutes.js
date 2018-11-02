@@ -1,32 +1,44 @@
 const express = require('express');
 const { User, Favorite } = require('../models/schema');
-const router = express.Router();
+const dbRouter = express.Router();
 //dotenv allows access to .env files when deploying
 //require('dotenv').config()
 
+function restrict(req, res, next) {
+  if (req.session.passport.user) {
+    next();
+  } else {
+    console.log('Access denied!');
+    // redirect to landing page properly
+    res.redirect('/');
+  }
+}
 
+dbRouter.use(restrict);
+
+
+// MAKE SURE THAT ALL OF THESE ROUTES ARE PROTECTED/REQUIRES A SESSION
 /*
 queries the user table for an id contained in the session
   then grabs the favorites that share that id and returns them in an array
 */
 // once session is working, re-add if/else statement
-router.get('/', (req, res) => {
-  console.log(req.session);
-  // if (isNaN(req.session.UserId)) {
-  //   console.log('Malformed user ID');
-  // } else {
-    User.query().findById(1).eager('favorite')
-      .then(result => 
-        res.status(200).json(result))
-      .catch(err => {
-        console.log(`error in dbRoute get favorites for user ${req.session}: ${err}`)
-        res.sendStatus(500);
-      })
+// cahnge function to not return entire result including hashed password
+dbRouter.get('/', async (req, res) => {
+  console.log(`in database get favorites by user query`)  
+  try {
+    const user = await User.query().where('username', req.session.passport.user)
+    const favorites = await user[0].$relatedQuery('favorite')
+    res.status(200).json(favorites);
   }
-);
+  catch (err) {
+    console.log(`error in dbRoute get  favorites for user: ${err}`);
+    res.sendStatus(500);
+  }
+});
 
 //  return all results from favorites marked public
-router.get('/public', (req, res) => {
+dbRouter.get('/public', (req, res) => {
     Favorite.query().where('public', true)
     .then(result => 
       res.status(200).json(result))
@@ -45,11 +57,7 @@ sends a query to check for the user id
   puts the saved data into the favorites table with the user_id column set to the user that saved
   only allows insert of the named properties
 */
-// access userId by req.session.id - uncomment user line when auth worked out
-router.post('/', async (req, res) => {
-  console.log(req.session);
-  //const user = await User.query().findById(req.session.id)
-  console.log(req.body);
+dbRouter.post('/', async (req, res) => {
   try {
     // await user.$relatedQuery('favorite')
     // .allowInsert('[pid, location, title, price, url, hasPic, date, category]')
@@ -75,4 +83,4 @@ sends a query to check for the user id
 //   res.send('Deleted')
 // });
 
-module.exports = router;
+module.exports = dbRouter;

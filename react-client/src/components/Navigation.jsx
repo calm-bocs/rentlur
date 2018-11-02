@@ -1,3 +1,6 @@
+// WE ARE THINKING WE WILL GUT THIS AND DO A TABS BAR INSTEAD.
+
+
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -85,10 +88,8 @@ class Navigation  extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      anchorEl: null,
-      location: '',
-      submitted: false,
-// open property?
+      anchorEl: null, //
+      // open property?
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -99,9 +100,6 @@ class Navigation  extends React.Component {
   }
 
   //For login/logout menu
-  handleClickAway = () =>{
-    this.setState({open: null});
-  }
   handleClick = e => {
     this.setState({anchorEl: e.currentTarget});
   }
@@ -157,36 +155,6 @@ class Navigation  extends React.Component {
                 BOCS Project
                 </Typography>
                 <div className={classes.grow} />
-
-                {/* Search Bar
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                <form onSubmit={this.handleSubmit} component={Link} to="/" >
-                  <InputBase
-                    placeholder="Search Location..."
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput
-                    }} 
-                    value = {this.state.location} 
-                    onChange = {this.onChange} 
-                    />
-                  </form>
-                </div>
-              
-                {/* Details */}
-                {/* {this.props.username ? 
-                (<IconButton className={classes.Button} color="inherit" aria-label="Menu" component={Link} to="/details">
-                  <List/>
-                </IconButton>) : null}
-
-                {/* Saved-Rentals */}
-                {/* {this.props.username ?                 
-                (<IconButton className={classes.Button} color="inherit" aria-label="Menu" component={Link} to="/saved-rentals">
-                  <CollectionBookmark/>
-                </IconButton>) : null} */} 
 
                 {/* Login */}
                 {!sessionStorage.getItem('userId') ?  

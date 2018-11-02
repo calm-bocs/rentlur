@@ -1,7 +1,7 @@
 import React from 'react';
-import config from '../../../config.js';
+//import config from '../../../config.js';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-const API_KEY = config.MAPS_API_KEY;
+//const API_KEY = config.MAPS_API_KEY;
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -71,6 +71,6 @@ class MapContainer extends React.Component {
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: API_KEY
-})(MapContainer)
+// export default GoogleApiWrapper({
+//   apiKey: API_KEY
+// })(MapContainer)
