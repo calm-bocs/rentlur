@@ -13,9 +13,8 @@ import { BrowserRouter, Route, Link, Switch, withRouter } from 'react-router-dom
 import Navigation from './components/Navigation.jsx'
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
-import MapContainer from './components/MapContainer.jsx';
 import Redirector from './components/Redirector.jsx';
-
+import Landing from './components/Landing.jsx';
 import Home from './components/Home.jsx';
 
 // Material UI
@@ -163,52 +162,32 @@ class App extends React.Component {
       <BrowserRouter>
 
       <div>
-        {/* <NavBar search={this.searchProperties} username={this.state.username} logout={this.logout}/> */}
-        <Navigation search={this.searchProperties} username={this.state.username} logout={this.logout}/>
-        <div className='main'> 
+        
         <Switch>
-          <Route exact path='/' render={(props) => { 
-            return (
-              <div>
-                {/* <Search {...props} search={this.searchProperties}/> */}
-                {/* <List {...props} retrieve={this.retrieveDetails} details={this.state.details} rentals={this.state.rentals} fav={this.addFavorite} username={this.state.username}/> */}
-              </div>
-            )
-          }} />
-          {/* <Route path='/saved-rentals' 
-            render={(props) => <SavedRentals {...props} 
-            saved={this.state.savedRentals} 
-            favs={this.retrieveFavorites} 
-            details={this.retrieveDetails} 
-            delete={this.deleteFavorite}/>}/> */}
+          <Route exact path='/' 
+            render={(props) => <Landing logout={this.logout}/>} 
+          />
           <Route 
             path='/login' 
             render={(props) => <Login {...props} 
-            login={this.login} />}
+              login={this.login} />}
           />
           <Route 
             path='/signup' 
             render={(props) => <Signup {...props} 
-            signup={this.signup} />}
-            />
+              signup={this.signup} />}
+          />
           <Route
             path='/map'
             render={(props) => (
                 <Home {...props}
                   favorites={this.state.favorites} 
                   getPublic={this.dummyFavoritesPublic}
-                  getPrivate={this.dummyFavoritesUser}/>
+                  getPrivate={this.dummyFavoritesUser}
+                  logout={this.logout}
+                  username={this.state.username}/>
               )}
             />
-          {/* <Route   
-            path='/details'
-            render={(props) => <Details {...props} 
-            details={this.state.details} />}
-          /> */}
-          {/* 
-            //add route for user/userid
-            //add route for public markers with user and category as query string  
-        */}
 
           {/*default path to hide potentially sensitive routes*/}
           <Route 
@@ -218,7 +197,6 @@ class App extends React.Component {
         </Switch>
 
         </div>
-      </div>
       </BrowserRouter>
 
     );
