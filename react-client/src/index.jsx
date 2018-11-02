@@ -1,3 +1,20 @@
+/*
+OVERVIEW OF ROUTER END GOAL:
+
+root url:
+  - Landing component (HTML 5 pulled in from website)
+    - links to login (links to signup)
+    - links to singup (links to login)
+    Notes: 
+      - Landing component will contain top-level logic and functionality for login and signup views
+        - including call to server to authorize
+      - success cases for login/signup server call will redirect to Home view
+Home view will be a component that always renders a tab bar (material UI) and the map
+  - will contain a switch that has two routes that render form/option select accordingly
+    - /user
+    - /public
+*/
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
@@ -13,13 +30,8 @@ import { BrowserRouter, Route, Link, Switch, withRouter } from 'react-router-dom
 import Navigation from './components/Navigation.jsx'
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
-import MapContainer from './components/MapContainer.jsx';
+//import MapContainer from './components/MapContainer.jsx';
 import Redirector from './components/Redirector.jsx';
-
-// Material UI
-// import AppBar from '@material-ui/core/AppBar';
-// import Grid from '@material-ui/core/Grid';
-
 
 
 
@@ -30,22 +42,19 @@ class App extends React.Component {
       username: '',
       userId: 0,
       favorites: [],
-      savedRentals:[],
-      details: [],
     };
+    this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-    //this.searchProperties = this.searchProperties.bind(this);
-    // this.signup = this.signup.bind(this);
-    //this.addFavorite = this.addFavorite.bind(this);
-    //this.retrieveFavorites = this.retrieveFavorites.bind(this);
-    //this.deleteFavorite = this.deleteFavorite.bind(this);
     this.dummyFavoritesPublic = this.dummyFavoritesPublic.bind(this);
     this.dummyFavoritesUser = this.dummyFavoritesUser.bind(this);
+    // additional bindings for addFavorite, deleteFavorite, filterFavoritesByCategory, etc. once those functions are built out
   }
  
-  // to be completed later
 
+  // this is just a test to verify database functionality
+  // once refactored, the top level indexjs will likely just be a router to either landing component or home component
+  // likely will not have a component did mount called until logged in and on home page
   componentDidMount() {
     //this.dummyFavoritesPublic();
     //this.dummyFavoritesUser();
@@ -55,35 +64,53 @@ class App extends React.Component {
     // }, () => this.retrieveFavorites());
   }
 
-  // searchProperties(searchQuery) {
-  //  console.log(searchQuery);
-  //   axios.post('/api/search', {city: searchQuery}).then((response) => {
-  //     this.setState({ rentals: response.data });
-  //   });
-  // }
+// signup success now logs user in. need to update login to redirect to home page
+  signup(username, password) {
+    console.log(`signup function called: ${username + password}`)
+    axios.post('/api/signup', {username, password})
+    .then ((newUserId)=> {
+      console.log(newUserId);
+      this.login(username, password);
+    })
+    .catch(err => {
+      console.log(`error received while trying to sign up: ${err}`)
+    })
+    }
+  
 
-  login(usr, pss, history) {
-    axios.post('/api/login', {username: usr, password: pss})
-    .then ((response)=> {
-      this.setState({
-        username: response.data.data.username,
-        userId: response.data.data.id
-      })
-      alert('Logged In Successfully!');
-      sessionStorage.setItem('username', response.data.data.username);
-      sessionStorage.setItem('userId', response.data.data.id);
-      console.log('Logged in as userId ' + sessionStorage.getItem('userId'));
+  // need to update success case to redirect to home page
+  login(username, password) {
+    console.log(`login function called ${username + password}`)
+    axios.post('/api/login', {username, password})
+    .then ((response) => {
+      console.log(`login function success response`, response);
+      // alert('Logged In Successfully!');
+      // redirect to home page
+      // this.setState({
+      //   username: response.data.data.username,
+      //   userId: response.data.data.id
+      // })
+      // alert('Logged In Successfully!');
+      // sessionStorage.setItem('username', response.data.data.username);
+      // sessionStorage.setItem('userId', response.data.data.id);
+      // console.log('Logged in as userId ' + sessionStorage.getItem('userId'));
       history.push('/map/private');
+
+      this.dummyFavoritesUser();
+
     })
     .catch((err) => alert('Incorrect username or password'));
   }
 
   logout() {
-    this.setState({
-      username: '',
-      userId: 0
-    });
-    sessionStorage.clear();
+    axios.get('/api/logout')
+    .then((response) => {
+      console.log(`successfully logged out: ${response}`)
+      // redirect to login page
+    })
+    .catch(err => {
+      console.log(`error logging out: ${err}`)
+    })
   }
 
 
@@ -134,60 +161,24 @@ class App extends React.Component {
       }
 
 
-  
-  retrieveDetails(listing){
-
-    this.setState({
-      details: listing
-    });
-    axios.post('/api/search/details',{listing})
-    .then(details => {
-      console.log('Details returned client-side', details);
-      const combined = Object.assign(details.data, listing);
-      // console.log(combined);
-      // sessionStorage.setItem('details',  combined);
-      // let savedDetails = sessionStorage.getItem('details');
-      //  let reassign = this.state.rentals[selected];
-      this.setState({details: combined});
-
-      console.log(this.state.details.title, '<---- details saved');
-    });
-  }
-
-
+  // this will all be refactored, likely according to the plan outlined at the top of the document
   render() {
     return (
-
       <BrowserRouter>
-
-      <div>
-        {/* <NavBar search={this.searchProperties} username={this.state.username} logout={this.logout}/> */}
-        <Navigation search={this.searchProperties} username={this.state.username} logout={this.logout}/>
-        <div className='main'> 
-        <Switch>
-          <Route exact path='/' render={(props) => { 
-            return (
-              <div>
-                {/* <Search {...props} search={this.searchProperties}/> */}
-                {/* <List {...props} retrieve={this.retrieveDetails} details={this.state.details} rentals={this.state.rentals} fav={this.addFavorite} username={this.state.username}/> */}
-              </div>
-            )
-          }} />
-          {/* <Route path='/saved-rentals' 
-            render={(props) => <SavedRentals {...props} 
-            saved={this.state.savedRentals} 
-            favs={this.retrieveFavorites} 
-            details={this.retrieveDetails} 
-            delete={this.deleteFavorite}/>}/> */}
-          <Route 
-            path='/login' 
-            render={(props) => <Login {...props} 
-            login={this.login} />}
-          />
-          <Route 
-            path='/signup' 
-            render={(props) => <Signup {...props} 
-            signup={this.signup} />}
+        <div>
+          <Navigation username={this.state.username} logout={this.logout}/>
+          <div className='main'> 
+          <Switch>
+            <Route exact path='/' render={(props) => { 
+              return (
+                <div>
+                </div>
+              )
+            }} />
+            <Route 
+              path='/login' 
+              render={(props) => <Login {...props} 
+              login={this.login} />}
             />
           <Route path='/map/private' render={(props) => {
             if(sessionStorage.getItem('userId')) {
@@ -196,16 +187,9 @@ class App extends React.Component {
               console.log('Un-logged user attempting to access maps');
               return <Redirector />
             }
-          }} />
-          {/* <Route   
-            path='/details'
-            render={(props) => <Details {...props} 
-            details={this.state.details} />}
-          /> */}
-          {/* 
-            //add route for user/userid
-            //add route for public markers with user and category as query string  
-        */}
+          }}
+          />
+         
 
           {/*default path to hide potentially sensitive routes*/}
           <Route 
@@ -215,7 +199,7 @@ class App extends React.Component {
         </Switch>
 
         </div>
-      </div>
+        </div>
       </BrowserRouter>
 
     );

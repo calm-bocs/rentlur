@@ -2,7 +2,9 @@
 // modules
 const express = require('express');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 const path = require('path');
+const session = require("express-session");
 
 // routers
 const authRouter = require('./authRoutes.js');
@@ -14,7 +16,17 @@ const app = express();
 // middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(morgan('combined'))
 
+// session
+// (move secret to config file?)
+app.use(
+  session({
+    secret: "something normal",
+    resave: false,
+    saveUninitialized: true
+  })
+);
 
 // routes
 app.use('/api/favorites', dbRouter);
