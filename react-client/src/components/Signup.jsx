@@ -1,81 +1,44 @@
-import React from 'react';
-import axios from 'axios';
+import React, {Component} from 'react';
 
-class Signup extends React.Component {
+class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      email: '',
       username: '',
       password: ''
     }
-    this.onNameChange =this.onNameChange.bind(this);
-    this.onEmailChange =this.onEmailChange.bind(this);
-    this.onUserChange =this.onUserChange.bind(this);
-    this.onPssChange =this.onPssChange.bind(this);
+    this.onChange =this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.reset = this.reset.bind(this);
   }
 
-  // refactor the following four functions to be handled by the same handler
-  onNameChange(e) {
+  onChange(event) {
     this.setState({
-      name: e.target.value
+      [event.target.name]: event.target.value
     });
   }
-  onEmailChange(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
-  onUserChange(e) {
-    this.setState({
-      username: e.target.value
-    });
-  }
-  onPssChange(e) {
-    this.setState({
-      password: e.target.value
-    });
-  }
-
-  handleSubmit(e) {
-    axios.post('/api/signup', {username: this.state.username, password: this.state.password})
-    .then ((response)=> {
-      if (response.data.name) {
-        alert('username exists!');
-      } else {
-        console.log(response);
-        alert('sign up successful!');
-        this.props.history.push('/login')
-      }
-    })
-    e.preventDefault();
-    // this.reset();
-  }
-
 
   reset () {
     this.setState({
-      name: '',
-      email: '',
       username: '',
       password: ''
     });
   }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.signup(this.state.username, this.state.password);
+    this.reset();
+  }
+
 
   render() {
     return (
       <div className='signup-block'>
         <div className='signup-sign'>Signup</div>
         <form onSubmit={this.handleSubmit}>
-
-          {/* <input value={this.state.name} onChange={this.onNameChange} placeholder= 'name'/><br/>
-          <input value={this.state.email} onChange={this.onEmailChange} placeholder= 'email'/> <br/> */}
-          <input type='username' value={this.state.username} onChange={this.onUserChange} placeholder= 'username'/> <br/>
-          <input type='password'  value={this.state.password} onChange={this.onPssChange} placeholder= 'password'/> <br/>
-
+          <input type='username' name='username' value={this.state.username} onChange={this.onChange} placeholder= 'username'/> <br/>
+          <input type='password' name='password' value={this.state.password} onChange={this.onChange} placeholder= 'password'/> <br/>
           <input className='sign-up-submit' type='submit' value='Submit'/>
         </form>
       </div>

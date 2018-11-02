@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-class Login extends React.Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -8,30 +8,21 @@ class Login extends React.Component {
       password: '',
     };
 
-    this.onUserChange = this.onUserChange.bind(this);
-    this.onPassChange = this.onPassChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.reset = this.reset.bind(this);
   }
 
-
-  onUserChange(e) {
+  onChange(event) {
     this.setState({
-      username: e.target.value
-    });
-  }
-
-  onPassChange(e) {
-    this.setState({
-      password: e.target.value
+      [event.target.name]: event.target.value
     });
   }
   
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     this.props.login(this.state.username, this.state.password);
-    this.props.history.push('/');
     this.reset();
   }
 
@@ -49,10 +40,10 @@ class Login extends React.Component {
       <form onSubmit={this.handleSubmit}>
       <div className='login-sign'>Login</div>
         <div>
-          <input type='username' value={this.state.username} onChange={this.onUserChange} placeholder='username'/>
+          <input type='username' name='username' value={this.state.username} onChange={this.onChange} placeholder='username'/>
         </div>
         <div>
-          <input type= "password" value={this.state.password} onChange={this.onPassChange} placeholder='password'/>
+          <input type= "password" name='password' value={this.state.password} onChange={this.onChange} placeholder='password'/>
         </div>
         <input className='log-in-submit' type='submit' value='Submit'/>
         </form>
