@@ -1,7 +1,7 @@
 import React from 'react';
-//import config from '../../../config.js';
+import config from '../../../config.js';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-//const API_KEY = config.MAPS_API_KEY;
+const API_KEY = config.MAPS_API_KEY;
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -36,13 +36,17 @@ class MapContainer extends React.Component {
       lat: 30.28,
       lng: -97.7431
     }
-    const favorites = this.props.favorites.map(fav => {
-      let favLoc = JSON.parse(fav.coordinates);
-      fav.position = {};
-      fav.position.lat = parseFloat(favLoc.latitude);
-      fav.position.lng = parseFloat(favLoc.longitude);
-      return fav;
-    });
+    let favorites = [];
+    if(this.props.favorites) {
+      favorites = this.props.favorites.map(fav => {
+        let favLoc = JSON.parse(fav.coordinates);
+        fav.position = {};
+        fav.position.lat = parseFloat(favLoc.latitude);
+        fav.position.lng = parseFloat(favLoc.longitude);
+        return fav;
+        
+      });
+    }
     return (
       <div className='mapholder'>
         <Map
@@ -71,6 +75,6 @@ class MapContainer extends React.Component {
   }
 }
 
-// export default GoogleApiWrapper({
-//   apiKey: API_KEY
-// })(MapContainer)
+export default GoogleApiWrapper({
+  apiKey: API_KEY
+})(MapContainer)
