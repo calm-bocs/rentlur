@@ -48,8 +48,8 @@ class App extends React.Component {
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-    this.dummyFavoritesPublic = this.dummyFavoritesPublic.bind(this);
-    this.dummyFavoritesUser = this.dummyFavoritesUser.bind(this);
+    this.favoritesPublic = this.favoritesPublic.bind(this);
+    this.favoritesUser = this.favoritesUser.bind(this);
     // additional bindings for addFavorite, deleteFavorite, filterFavoritesByCategory, etc. once those functions are built out
     this.navigateTo = this.navigateTo.bind(this);
   }
@@ -157,7 +157,7 @@ class App extends React.Component {
       }
     }
 
-    dummyFavoritesPublic() {
+    favoritesPublic() {
     console.log(`making call to server route api/properties/public`);
       axios.get(`/api/favorites/public`)
       .then(response => {
@@ -167,7 +167,7 @@ class App extends React.Component {
       .catch(err => console.log(err));
     }
 
-    dummyFavoritesUser() {
+    favoritesUser() {
       console.log(`making call to server route api/properties/`);
         axios.get(`/api/favorites/`)
         .then(response => {
@@ -206,8 +206,8 @@ class App extends React.Component {
             render={(props) => (
                 <Home {...props}
                   favorites={this.state.favorites} 
-                  getPublic={this.dummyFavoritesPublic}
-                  getPrivate={this.dummyFavoritesUser}
+                  getPublic={this.favoritesPublic}
+                  getPrivate={this.favoritesUser}
                   logout={this.logout}
                   username={this.state.username}
                   navigateTo={this.navigateTo}
