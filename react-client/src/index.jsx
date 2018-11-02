@@ -29,7 +29,7 @@ class App extends React.Component {
     this.state = {
       username: '',
       userId: 0,
-      rentals: [],
+      favorites: [],
       savedRentals:[],
       details: [],
     };
@@ -47,8 +47,8 @@ class App extends React.Component {
   // to be completed later
 
   componentDidMount() {
-    this.dummyFavoritesPublic();
-    this.dummyFavoritesUser();
+    //this.dummyFavoritesPublic();
+    //this.dummyFavoritesUser();
     // this.setState({
     //   username: sessionStorage.getItem('username') || '',
     //   userId: sessionStorage.getItem('userId') || 0
@@ -62,7 +62,7 @@ class App extends React.Component {
   //   });
   // }
 
-  login(usr, pss) {
+  login(usr, pss, history) {
     axios.post('/api/login', {username: usr, password: pss})
     .then ((response)=> {
       this.setState({
@@ -72,6 +72,8 @@ class App extends React.Component {
       alert('Logged In Successfully!');
       sessionStorage.setItem('username', response.data.data.username);
       sessionStorage.setItem('userId', response.data.data.id);
+      console.log('Logged in as userId ' + sessionStorage.getItem('userId'));
+      history.push('/map/private');
     })
     .catch((err) => alert('Incorrect username or password'));
   }
@@ -121,10 +123,13 @@ class App extends React.Component {
 
     dummyFavoritesUser() {
       console.log(`making call to server route api/properties/`);
-        axios.get(`api/favorites/`)
-        .then(data => 
-          console.log(`result returned from call to db for user favorites: ${JSON.stringify(data)}`)  
-        )
+        axios.get(`/api/favorites/`)
+        .then(response => {
+          console.log(`result returned from call to db for user favorites:`, response.data);
+          this.setState({favorites: response.data.favorite}, () => {
+            console.log('Favorites changed, new favorites:', this.state.favorites)
+          })
+        })
         .catch(err => console.log(err));
       }
 
@@ -184,10 +189,11 @@ class App extends React.Component {
             render={(props) => <Signup {...props} 
             signup={this.signup} />}
             />
-          <Route path='/map' render={(props) => {
+          <Route path='/map/private' render={(props) => {
             if(sessionStorage.getItem('userId')) {
-              return <MapContainer {...props}/>
+              return <MapContainer {...props} getDataByType={this.dummyFavoritesUser} favorites={this.state.favorites}/>
             } else {
+              console.log('Un-logged user attempting to access maps');
               return <Redirector />
             }
           }} />
