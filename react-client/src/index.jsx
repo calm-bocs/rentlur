@@ -80,7 +80,7 @@ class App extends React.Component {
   
 
   // need to update success case to redirect to home page
-  login(username, password) {
+  login(username, password, history) {
     console.log(`login function called ${username + password}`)
     axios.post('/api/login', {username, password})
     .then ((response) => {
@@ -92,15 +92,17 @@ class App extends React.Component {
       //   userId: response.data.data.id
       // })
       // alert('Logged In Successfully!');
-      // sessionStorage.setItem('username', response.data.data.username);
-      // sessionStorage.setItem('userId', response.data.data.id);
+      sessionStorage.setItem('username', response.data.data.username);
+      sessionStorage.setItem('userId', response.data.data.id);
+      this.forceUpdate();
       // console.log('Logged in as userId ' + sessionStorage.getItem('userId'));
       history.push('/map/private');
 
-      this.dummyFavoritesUser();
-
     })
-    .catch((err) => alert('Incorrect username or password'));
+    .catch((err) => {
+      console.log(err)
+      alert('Incorrect username or password')
+    });
   }
 
   logout() {
@@ -108,6 +110,8 @@ class App extends React.Component {
     .then((response) => {
       console.log(`successfully logged out: ${response}`)
       // redirect to login page
+      sessionStorage.clear();
+      this.forceUpdate();
     })
     .catch(err => {
       console.log(`error logging out: ${err}`)
@@ -154,7 +158,7 @@ class App extends React.Component {
         axios.get(`/api/favorites/`)
         .then(response => {
           console.log(`result returned from call to db for user favorites:`, response.data);
-          this.setState({favorites: response.data.favorite}, () => {
+          this.setState({favorites: response.data}, () => {
             console.log('Favorites changed, new favorites:', this.state.favorites)
           })
         })

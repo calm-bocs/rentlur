@@ -22,7 +22,7 @@ const Home = (props) => {
               </Route>
             </Switch>
       </BrowserRouter>
-            <MapContainer {...props}/>
+            <MapContainer {...props} favorites={props.favorites}/>
         </div>
       </div>
     )
