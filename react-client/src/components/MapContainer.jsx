@@ -6,6 +6,11 @@ const API_KEY = config.MAPS_API_KEY;
 class MapContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activeMarker: null,
+      showingInfoWindow: false
+    }
+    this.setActiveMarker = this.setActiveMarker.bind(this);
   }
 
   componentDidMount() {
@@ -14,6 +19,13 @@ class MapContainer extends React.Component {
 
   fetchData() {
     this.props.getDataByType();
+  }
+  setActiveMarker(props, marker, e) {
+    if(this.state.activeData && props.id === this.state.activeData.id) {
+      this.setState({showingInfoWindow: !this.state.showingInfoWindow})
+    } else {
+      this.setState({activeMarker: marker, showingInfoWindow: true, activeData: props.data})
+    }
   }
 
   render() {
@@ -25,7 +37,7 @@ class MapContainer extends React.Component {
       lat: 30.28,
       lng: -97.7431
     }
-    const markers = this.props.favorites.map(fav => {
+    const favorites = this.props.favorites.map(fav => {
       let favLoc = JSON.parse(fav.coordinates);
       fav.position = {};
       fav.position.lat = parseFloat(favLoc.latitude);
@@ -40,7 +52,21 @@ class MapContainer extends React.Component {
           style={style}
           initialCenter={testLocation}
         >
-          {markers.map(marker => (<Marker key={marker.id} position={marker.position}/>))}
+          {favorites.map(marker => (
+            <Marker 
+              key={marker.id} 
+              position={marker.position}
+              onClick={this.setActiveMarker}
+              data={marker}>
+            </Marker>)
+          )}
+          {this.state.activeMarker ? 
+            <InfoWindow 
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}
+              >
+                <span>{this.state.activeData.description}</span>
+            </InfoWindow> : ''}
         </Map>
       </div>
     )
