@@ -13,9 +13,17 @@ const Home = (props) => {
       <div>
         <Navigation navigateTo={props.navigateTo} location={props.location} username={props.username} logout={props.logout} {...props}/>
         <div className = 'main'>
-          {props.location === 'private' 
+          {/* {props.location === 'private' 
             ? <PrivateHeader getPrivate={props.getPrivate} location={props.location}/>
-            : <PublicHeader getPublic={props.getPublic} location={props.location}/>}
+            : <PublicHeader getPublic={props.getPublic} location={props.location}/>} */}
+          <Switch>
+            <Route path='/map/private'>
+              <PrivateHeader getPrivate={props.getPrivate} location={props.location}/>
+            </Route>
+            <Route path='/map/public'> 
+              <PublicHeader getPublic={props.getPublic} location={props.location}/>
+            </Route>
+          </Switch>
           <MapContainer {...props} favorites={props.favorites}/>
         </div>
       </div>
