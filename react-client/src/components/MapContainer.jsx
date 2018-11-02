@@ -19,7 +19,7 @@ class MapContainer extends React.Component {
   }
 
   fetchData() {
-    this.props.getDataByType();
+    //this.props.getDataByType();
   }
   setActiveMarker(props, marker, e) {
     console.log('Current active: ', this.state.activeData);

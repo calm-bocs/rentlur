@@ -16,6 +16,8 @@ import Signup from './components/Signup.jsx';
 import MapContainer from './components/MapContainer.jsx';
 import Redirector from './components/Redirector.jsx';
 
+import Home from './components/Home.jsx';
+
 // Material UI
 // import AppBar from '@material-ui/core/AppBar';
 // import Grid from '@material-ui/core/Grid';
@@ -189,14 +191,15 @@ class App extends React.Component {
             render={(props) => <Signup {...props} 
             signup={this.signup} />}
             />
-          <Route path='/map/private' render={(props) => {
-            if(sessionStorage.getItem('userId')) {
-              return <MapContainer {...props} getDataByType={this.dummyFavoritesUser} favorites={this.state.favorites}/>
-            } else {
-              console.log('Un-logged user attempting to access maps');
-              return <Redirector />
-            }
-          }} />
+          <Route
+            path='/map'
+            render={(props) => (
+                <Home {...props}
+                  favorites={this.state.favorites} 
+                  getPublic={this.dummyFavoritesPublic}
+                  getPrivate={this.dummyFavoritesUser}/>
+              )}
+            />
           {/* <Route   
             path='/details'
             render={(props) => <Details {...props} 
