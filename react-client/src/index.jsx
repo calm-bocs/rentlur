@@ -148,16 +148,12 @@ class App extends React.Component {
     navigateTo(location, history) {
       let app = this;
       if(location === 'public') {
+        this.setState({location: 'public'});
         history.push('/map/public');
-        this.setState({location: 'public'}, () => {
-          app.dummyFavoritesPublic();
-        });
       }
       if(location === 'private') {
-        history.push('/map/private');
-        this.setState({location: 'private'}, () => {
-          app.dummyFavoritesUser();
-        });
+        this.setState({location: 'private'})
+        history.push('/map/private')
       }
     }
 
