@@ -43,6 +43,7 @@ class App extends React.Component {
       username: '',
       userId: 0,
       favorites: [],
+      location: location.pathname.includes('public') ? 'public' : 'private',
     };
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
@@ -50,6 +51,7 @@ class App extends React.Component {
     this.dummyFavoritesPublic = this.dummyFavoritesPublic.bind(this);
     this.dummyFavoritesUser = this.dummyFavoritesUser.bind(this);
     // additional bindings for addFavorite, deleteFavorite, filterFavoritesByCategory, etc. once those functions are built out
+    this.navigateTo = this.navigateTo.bind(this);
   }
  
 
@@ -94,9 +96,9 @@ class App extends React.Component {
       // alert('Logged In Successfully!');
       sessionStorage.setItem('username', response.data.data.username);
       sessionStorage.setItem('userId', response.data.data.id);
-      this.forceUpdate();
+      // this.forceUpdate();
       // console.log('Logged in as userId ' + sessionStorage.getItem('userId'));
-      history.push('/map/private');
+      this.navigateTo('private', history);
 
     })
     .catch((err) => {
@@ -143,6 +145,21 @@ class App extends React.Component {
   //   }
   // }
 
+    navigateTo(location, history) {
+      let app = this;
+      if(location === 'public') {
+        history.push('/map/public');
+        this.setState({location: 'public'}, () => {
+          app.dummyFavoritesPublic();
+        });
+      }
+      if(location === 'private') {
+        history.push('/map/private');
+        this.setState({location: 'private'}, () => {
+          app.dummyFavoritesUser();
+        });
+      }
+    }
 
     dummyFavoritesPublic() {
     console.log(`making call to server route api/properties/public`);
@@ -196,7 +213,9 @@ class App extends React.Component {
                   getPublic={this.dummyFavoritesPublic}
                   getPrivate={this.dummyFavoritesUser}
                   logout={this.logout}
-                  username={this.state.username}/>
+                  username={this.state.username}
+                  navigateTo={this.navigateTo}
+                  location={this.state.location}/>
               )}
             />
 

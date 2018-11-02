@@ -145,51 +145,61 @@ class Navigation  extends React.Component {
 
   }
 
-    render(){
-      const {anchorEl} = this.state;
-      const {classes} = this.props;
-      return (
-        <div className={classes.root}>
-        <AppBar position="static" >
-            <Toolbar>
-                <Typography variant="h5" className={classes.title} variant="title" color="inherit" component={Link} to="/">
-                BOCS Project
-                </Typography>
-                <div className={classes.grow} />
+  findTabValue() {
+    if(location.pathname.includes('public')) {
+      return 1;
+    }
+    if(location.pathname.includes('private')) {
+      return 0;
+    }
+    return -1;
+  }
 
-                <TabBar centered>
-                  <Tab onClick={this.handleClick} component={Link} to="/map/private" label='Private' />
-                  <Tab onClick={this.handleClick} component={Link} to="/map/public" label='Public' />
-                </TabBar>
+  render(){
+    const {anchorEl} = this.state;
+    const {classes} = this.props;
+    let tabValue = this.findTabValue();
+    return (
+      <div className={classes.root}>
+      <AppBar position="static" >
+        <Toolbar>
+            <Typography variant="h5" className={classes.title} variant="title" color="inherit" component={Link} to="/">
+            BOCS Project
+            </Typography>
+            <div className={classes.grow} />
+            <TabBar value={tabValue} centered>
+              <Tab onClick={() => this.props.navigateTo('private', this.props.history)} label='Private' />
+              <Tab onClick={() => this.props.navigateTo('public', this.props.history)} label='Public' />
+            </TabBar>
 
-                {/* Login */}
-                {!sessionStorage.getItem('userId') ?  
-                  (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/login">
-                  <AccountCircle 
-                  aria-owns={anchorEl ? 'menu' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleClick}
-                  onClose={this.handleClose}
-                  />
-                </IconButton>) : null}     
+            {/* Login */}
+            {!sessionStorage.getItem('userId') ?  
+              (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/login">
+              <AccountCircle 
+              aria-owns={anchorEl ? 'menu' : undefined}
+              aria-haspopup="true"
+              onClick={this.handleClick}
+              onClose={this.handleClose}
+              />
+            </IconButton>) : null}     
 
-                {/* Signup and Login drop down when user not logged in */}
-                {/* <Menu
-                id='menu'
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={this.handleClose}
-                >
-                <MenuItem onClick={this.handleClose} component={Link} to="/signup">Signup</MenuItem>
-                <MenuItem onClick={this.handleClose} component={Link} to="/login">Login</MenuItem>
-                </Menu>         */}
+              {/* Signup and Login drop down when user not logged in */}
+              {/* <Menu
+              id='menu'
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={this.handleClose}
+              >
+              <MenuItem onClick={this.handleClose} component={Link} to="/signup">Signup</MenuItem>
+              <MenuItem onClick={this.handleClose} component={Link} to="/login">Login</MenuItem>
+              </Menu>         */}
 
-                {/* Logout */}
-                {sessionStorage.getItem('userId') ?                 
-                (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/logout">
-                  <Close onClick={this.props.logout}/>
-                </IconButton> ): null}
-            </Toolbar>
+            {/* Logout */}
+            {sessionStorage.getItem('userId') ?                 
+            (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/logout">
+              <Close onClick={this.props.logout}/>
+            </IconButton> ): null}
+          </Toolbar>
         </AppBar>
       </div>
     )

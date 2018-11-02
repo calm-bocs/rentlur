@@ -10,7 +10,7 @@ class PublicHeader extends React.Component {
   }
 
   render() {
-    return <div>Eventually A Form Maybe</div>
+    return <div>Something Different From The Private</div>
   }
 }
 
