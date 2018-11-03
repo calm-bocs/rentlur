@@ -61,17 +61,15 @@ dbRouter.post('/', async (req, res) => {
 });
 
 dbRouter.delete('/', async(req, res) => {
-  console.log(req.body);
-  //Find ID - req.body?
-  const id = undefined //SOMETHING
+  const id = req.body.favId
   try {
     if(!id) {
       throw new Error('No favorite ID found');
     }
-    const user_id = req.session.passport.userid;
+    //const user_id = req.session.passport.userid;
     await Favorite.query()
       .where({
-        user_id,
+        //user_id,  re-enable once userid gets into server session
         id
       })
       .del();

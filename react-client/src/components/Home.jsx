@@ -24,11 +24,7 @@ const Home = (props) => {
               <PublicHeader getPublic={props.getPublic} location={props.location}/>
             </Route>
           </Switch>
-<<<<<<< HEAD
-          <MapContainer {...props} favorites={props.favorites}/>
-=======
           <MapContainer {...props} favorites={props.favorites} deleteFavorite={props.deleteFavorite}/>
->>>>>>> 0f8fa8dc64a881250e0a20a93e684b059ad86692
         </div>
       </div>
     )
