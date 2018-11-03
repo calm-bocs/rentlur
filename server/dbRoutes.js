@@ -39,14 +39,6 @@ dbRouter.get('/public', (req, res) => {
   }
 );
 
-
-/*
-async await version for posting to the favorites table
-might be necessary to keep it as an async await to use the $relatedQuery method
-sends a query to check for the user id
-  puts the saved data into the favorites table with the user_id column set to the user that saved
-  only allows insert of the named properties
-*/
 dbRouter.post('/', async (req, res) => {
     const newFavorite = req.body;
     try{

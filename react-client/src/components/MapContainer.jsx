@@ -1,4 +1,5 @@
 import React from 'react';
+import { render } from 'react-dom';
 import config from '../../../config.js';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import InfoBox from './InfoBox.jsx';
@@ -13,10 +14,16 @@ class MapContainer extends React.Component {
       activeData: {}
     }
     this.setActiveMarker = this.setActiveMarker.bind(this);
+    this.removeMarker = this.removeMarker.bind(this);
   }
 
   componentDidMount() {
     console.log('rendered map');
+  }
+
+  removeMarker(){
+    console.log('in removeMarker function')
+    this.setState({activeMarker: null, showingInfoWindow: false})
   }
 
   fetchData() {
@@ -26,6 +33,7 @@ class MapContainer extends React.Component {
     console.log('Current active: ', this.state.activeData);
     console.log('Clicked marker:', props.data)
     this.setState({activeMarker: marker, showingInfoWindow: true, activeData: props.data})
+    render(<button onClick={this.removeMarker}>DELETE</button>, document.getElementById('delete-button'));
   }
 
   componentDidUpdate(prevProps) {
@@ -51,30 +59,32 @@ class MapContainer extends React.Component {
         fav.position.lat = parseFloat(favLoc.latitude);
         fav.position.lng = parseFloat(favLoc.longitude);
         return fav;
-        
       });
     }
     return (
       <div className='mapholder'>
-        <Map 
+        <Map
           google={this.props.google}
           zoom={11}
           style={style}
           initialCenter={testLocation}
         >
           {favorites.map(marker => (
-            <Marker 
-              key={marker.id} 
+            <Marker
+              key={marker.id}
               position={marker.position}
               onClick={this.setActiveMarker}
               data={marker}>
             </Marker>)
           )}
-          <InfoWindow 
+          <InfoWindow
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
               >
+              <div>
                 <InfoBox activeData={this.state.activeData} />
+                <div id='delete-button'></div>
+              </div>
           </InfoWindow>
         </Map>
       </div>
