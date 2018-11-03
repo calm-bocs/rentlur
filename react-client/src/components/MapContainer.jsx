@@ -22,8 +22,9 @@ class MapContainer extends React.Component {
   }
 
   removeMarker(){
-    console.log('in removeMarker function')
-    this.setState({activeMarker: null, showingInfoWindow: false})
+    this.setState({activeMarker: null, showingInfoWindow: false});
+    let toDelete = this.state.activeData.id;
+    this.props.deleteFavorite(toDelete);
   }
 
   fetchData() {
