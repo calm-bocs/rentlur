@@ -70,12 +70,12 @@ class App extends React.Component {
   }
 
 // signup success now logs user in. need to update login to redirect to home page
-  signup(username, password) {
+  signup(username, password, history) {
     console.log(`signup function called: ${username + password}`)
     axios.post('/api/signup', {username, password})
     .then ((newUserId)=> {
       console.log(newUserId);
-      this.login(username, password);
+      this.login(username, password, history);
     })
     .catch(err => {
       console.log(`error received while trying to sign up: ${err}`)

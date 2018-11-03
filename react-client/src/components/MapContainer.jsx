@@ -30,11 +30,14 @@ class MapContainer extends React.Component {
   fetchData() {
     //this.props.getDataByType();
   }
+
   setActiveMarker(props, marker, e) {
     console.log('Current active: ', this.state.activeData);
     console.log('Clicked marker:', props.data)
     this.setState({activeMarker: marker, showingInfoWindow: true, activeData: props.data})
+    if (sessionStorage.getItem('userId') == this.state.activeData.user_id) {
     render(<button onClick={this.removeMarker}>DELETE</button>, document.getElementById('delete-button'));
+    }
   }
 
   componentDidUpdate(prevProps) {

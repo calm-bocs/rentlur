@@ -55,9 +55,13 @@ authRouter.post("/signup", (req, res) => {
     knex("users")
       .insert([{ username: username, password: hash }])
       .returning('id')
-      .then(data => res.send(data))
-      .catch(err => res.status(400).send(err));
-  });
+      .then(data => 
+        res.send(data))
+      .catch(err => {
+        console.log(`error message`, err)
+        res.status(400).send(err);
+      })
+    });
 });
 
 module.exports = authRouter;

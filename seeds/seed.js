@@ -7,10 +7,10 @@ exports.seed = (knex, Promise) => {
     .then(() => knex("favorites").del())
     .then(() =>
       knex("users").insert([
-        { id: 1, username: "Chris", password: bcrypt.hashSync("Chris", 10) },
-        { id: 2, username: "Mitch", password: bcrypt.hashSync("Mitch", 10) },
-        { id: 3, username: "Lucas", password: bcrypt.hashSync("Lucas", 10) },
-        { id: 4, username: "Alberto", password: bcrypt.hashSync("Alberto", 10) }
+        { username: "Chris", password: bcrypt.hashSync("Chris", 10) },
+        { username: "Mitch", password: bcrypt.hashSync("Mitch", 10) },
+        { username: "Lucas", password: bcrypt.hashSync("Lucas", 10) },
+        { username: "Alberto", password: bcrypt.hashSync("Alberto", 10) }
       ])
     )
     .then(() =>

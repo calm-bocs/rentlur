@@ -29,7 +29,7 @@ class Signup extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.signup(this.state.username, this.state.password);
+    this.props.signup(this.state.username, this.state.password, this.props.history);
     this.reset();
   }
 
