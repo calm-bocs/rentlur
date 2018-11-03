@@ -164,7 +164,7 @@ class App extends React.Component {
     axios.get(`/api/favorites/public`)
       .then(response => {
         console.log(`result returned from call to db for public favorites: `, response.data);
-        this.setState({favorites: response.data})  
+        this.setState({favorites: response.data})
       })
       .catch(err => console.log(err));
   }
@@ -188,29 +188,30 @@ class App extends React.Component {
       .catch(err => console.error(err));
   }
 
+
   deleteFavorite(favId) {
     console.log(`Attempting to delete favorite ${favId}`);
   }
 
   // this will all be refactored, likely according to the plan outlined at the top of the document
+
   render() {
     return (
       <BrowserRouter>
 
       <div>
-        
         <Switch>
-          <Route exact path='/' 
-            render={(props) => <Landing logout={this.logout}/>} 
+          <Route exact path='/'
+            render={(props) => <Landing logout={this.logout}/>}
           />
-          <Route 
-            path='/login' 
-            render={(props) => <Login {...props} 
+          <Route
+            path='/login'
+            render={(props) => <Login {...props}
               login={this.login} />}
           />
-          <Route 
-            path='/signup' 
-            render={(props) => <Signup {...props} 
+          <Route
+            path='/signup'
+            render={(props) => <Signup {...props}
               signup={this.signup} />}
           />
           <Route
@@ -230,7 +231,7 @@ class App extends React.Component {
             />
 
           {/*default path to hide potentially sensitive routes*/}
-          <Route 
+          <Route
             path='/*'
             render={(props) => <Redirector />}
           />

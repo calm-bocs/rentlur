@@ -16,7 +16,7 @@ const app = express();
 // middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(morgan('combined'))
+app.use(morgan('dev'))
 
 // session
 // (move secret to config file?)

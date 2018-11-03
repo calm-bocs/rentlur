@@ -126,20 +126,21 @@ button {
 
 .main {
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 40% 60%;
   grid-template-rows: 1;
 }
 
 .mapholder {
-  grid-column-start: 1;
-  grid-column-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
   grid-row-start: 1;
 }
 
 .addySearch {
   margin-top: 10px;
-  grid-column-start: 2;
-  grid-column-end: 3;
+  margin-left: 10px;
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
 .nav-bar {
