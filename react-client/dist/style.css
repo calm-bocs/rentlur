@@ -167,3 +167,8 @@ button {
   padding: 50px;
   transition: 400ms ease all;
 }
+
+.delete-btn {
+  background-color: red;
+  font-weight: 1.1em;
+}
