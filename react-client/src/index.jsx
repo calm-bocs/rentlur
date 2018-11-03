@@ -191,8 +191,11 @@ class App extends React.Component {
 
   deleteFavorite(favId) {
     console.log(`Attempting to delete favorite ${favId}`);
-    axios.delete('/api/favorites', favId)
-      .then(() => this.favoritesUser())
+    axios.delete('/api/favorites', {data: {favId, flag:'|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||'}})
+      .then((response) => {
+        console.log(response);
+        this.favoritesUser()
+      })
       .catch(err => console.log(err));
   }
 

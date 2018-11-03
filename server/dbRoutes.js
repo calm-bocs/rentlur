@@ -60,6 +60,27 @@ dbRouter.post('/', async (req, res) => {
     }
 });
 
+dbRouter.delete('/', async(req, res) => {
+  const id = req.body.favId
+  try {
+    if(!id) {
+      throw new Error('No favorite ID found');
+    }
+    //const user_id = req.session.passport.userid;
+    await Favorite.query()
+      .where({
+        //user_id,  re-enable once userid gets into server session
+        id
+      })
+      .del();
+    res.status(201).send('Deletion successful');
+  } 
+  catch (err) {
+    console.log(`Error in DB removal "${err.name}": ${err.message}`);
+    res.sendStatus(500);
+  }
+})
+
 
 /*
 async await version for deleting from the properties table
