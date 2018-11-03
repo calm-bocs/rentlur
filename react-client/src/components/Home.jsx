@@ -16,8 +16,7 @@ const Home = (props) => {
           {/* {props.location === 'private' 
             ? <PrivateHeader getPrivate={props.getPrivate} location={props.location}/>
             : <PublicHeader getPublic={props.getPublic} location={props.location}/>} */}
-          <MapContainer {...props} favorites={props.favorites} deleteFavorite={props.deleteFavorite}/>
-
+          <MapContainer {...props} favorites={props.favorites}/>
           <Switch>
             <Route path='/map/private'>
               <PrivateHeader storeFavorite={props.storeFavorite} getPrivate={props.getPrivate} location={props.location}/>
@@ -26,7 +25,6 @@ const Home = (props) => {
               <PublicHeader getPublic={props.getPublic} location={props.location}/>
             </Route>
           </Switch>
-          <MapContainer {...props} favorites={props.favorites}/>
         </div>
       </div>
     )

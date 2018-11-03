@@ -29,7 +29,7 @@ passport.use(
           console.log("username does not exist");
           return done(null, false, { message: "username does not exist" });
         } else {
-        bcrypt.compare(password, user[0].password, function(err, res) {   
+        bcrypt.compare(password, user[0].password, function(err, res) {
           console.log(res);
           if (res) {
             user = user[0];
