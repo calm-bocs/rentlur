@@ -10,8 +10,6 @@ const InfoBox = (props) => {
     <span className='info-type'>Description:</span>
     <br />
     <span className='info-description'>{props.activeData.description}</span>
-    {/* <br />
-    <button className='delete-btn' onClick={(e) => console.log('clicked delete button')}>Delete</button> */}
   </div>)
 }
 
