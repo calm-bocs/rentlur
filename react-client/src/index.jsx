@@ -43,13 +43,15 @@ class App extends React.Component {
       username: '',
       userId: 0,
       favorites: [],
+      location: location.pathname.includes('public') ? 'public' : 'private',
     };
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-    this.dummyFavoritesPublic = this.dummyFavoritesPublic.bind(this);
-    this.dummyFavoritesUser = this.dummyFavoritesUser.bind(this);
+    this.favoritesPublic = this.favoritesPublic.bind(this);
+    this.favoritesUser = this.favoritesUser.bind(this);
     // additional bindings for addFavorite, deleteFavorite, filterFavoritesByCategory, etc. once those functions are built out
+    this.navigateTo = this.navigateTo.bind(this);
   }
  
 
@@ -94,9 +96,9 @@ class App extends React.Component {
       // alert('Logged In Successfully!');
       sessionStorage.setItem('username', response.data.data.username);
       sessionStorage.setItem('userId', response.data.data.id);
-      this.forceUpdate();
+      // this.forceUpdate();
       // console.log('Logged in as userId ' + sessionStorage.getItem('userId'));
-      history.push('/map/private');
+      this.navigateTo('private', history);
 
     })
     .catch((err) => {
@@ -143,17 +145,29 @@ class App extends React.Component {
   //   }
   // }
 
+    navigateTo(location, history) {
+      let app = this;
+      if(location === 'public') {
+        this.setState({location: 'public'});
+        history.push('/map/public');
+      }
+      if(location === 'private') {
+        this.setState({location: 'private'})
+        history.push('/map/private')
+      }
+    }
 
-    dummyFavoritesPublic() {
+    favoritesPublic() {
     console.log(`making call to server route api/properties/public`);
-      axios.get(`api/favorites/public`)
-      .then(data => 
-        console.log(`result returned from call to db for public favorites: ${JSON.stringify(data)}`)  
-      )
+      axios.get(`/api/favorites/public`)
+      .then(response => {
+        console.log(`result returned from call to db for public favorites: `, response.data);
+        this.setState({favorites: response.data})  
+      })
       .catch(err => console.log(err));
     }
 
-    dummyFavoritesUser() {
+    favoritesUser() {
       console.log(`making call to server route api/properties/`);
         axios.get(`/api/favorites/`)
         .then(response => {
@@ -192,10 +206,12 @@ class App extends React.Component {
             render={(props) => (
                 <Home {...props}
                   favorites={this.state.favorites} 
-                  getPublic={this.dummyFavoritesPublic}
-                  getPrivate={this.dummyFavoritesUser}
+                  getPublic={this.favoritesPublic}
+                  getPrivate={this.favoritesUser}
                   logout={this.logout}
-                  username={this.state.username}/>
+                  username={this.state.username}
+                  navigateTo={this.navigateTo}
+                  location={this.state.location}/>
               )}
             />
 

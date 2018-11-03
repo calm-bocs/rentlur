@@ -17,7 +17,8 @@ import AccountCircle from '@material-ui/icons/AccountCircleOutlined';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/icons/ListAltSharp';
 import Close from '@material-ui/icons/CloseSharp';
-
+import Tab from '@material-ui/core/Tab';
+import TabBar from '@material-ui/core/Tabs';
 
 //Stylesheet for the navigation bar. 
 //Used in the withStyles method of material-ui when exporting
@@ -144,46 +145,61 @@ class Navigation  extends React.Component {
 
   }
 
-    render(){
-      const {anchorEl} = this.state;
-      const {classes} = this.props;
-      return (
-        <div className={classes.root}>
-        <AppBar position="static" >
-            <Toolbar>
-                <Typography variant="h5" className={classes.title} variant="title" color="inherit" component={Link} to="/">
-                BOCS Project
-                </Typography>
-                <div className={classes.grow} />
+  findTabValue() {
+    if(location.pathname.includes('public')) {
+      return 1;
+    }
+    if(location.pathname.includes('private')) {
+      return 0;
+    }
+    return -1;
+  }
 
-                {/* Login */}
-                {!sessionStorage.getItem('userId') ?  
-                  (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/login">
-                  <AccountCircle 
-                  aria-owns={anchorEl ? 'menu' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleClick}
-                  onClose={this.handleClose}
-                  />
-                </IconButton>) : null}     
+  render(){
+    const {anchorEl} = this.state;
+    const {classes} = this.props;
+    let tabValue = this.findTabValue();
+    return (
+      <div className={classes.root}>
+      <AppBar position="static" >
+        <Toolbar>
+            <Typography variant="h5" className={classes.title} variant="title" color="inherit" component={Link} to="/">
+            BOCS Project
+            </Typography>
+            <div className={classes.grow} />
+            <TabBar value={tabValue} centered>
+              <Tab onClick={() => this.props.navigateTo('private', this.props.history)} label='Private' />
+              <Tab onClick={() => this.props.navigateTo('public', this.props.history)} label='Public' />
+            </TabBar>
 
-                {/* Signup and Login drop down when user not logged in */}
-                {/* <Menu
-                id='menu'
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={this.handleClose}
-                >
-                <MenuItem onClick={this.handleClose} component={Link} to="/signup">Signup</MenuItem>
-                <MenuItem onClick={this.handleClose} component={Link} to="/login">Login</MenuItem>
-                </Menu>         */}
+            {/* Login */}
+            {!sessionStorage.getItem('userId') ?  
+              (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/login">
+              <AccountCircle 
+              aria-owns={anchorEl ? 'menu' : undefined}
+              aria-haspopup="true"
+              onClick={this.handleClick}
+              onClose={this.handleClose}
+              />
+            </IconButton>) : null}     
 
-                {/* Logout */}
-                {sessionStorage.getItem('userId') ?                 
-                (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/logout">
-                  <Close onClick={this.props.logout}/>
-                </IconButton> ): null}
-            </Toolbar>
+              {/* Signup and Login drop down when user not logged in */}
+              {/* <Menu
+              id='menu'
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={this.handleClose}
+              >
+              <MenuItem onClick={this.handleClose} component={Link} to="/signup">Signup</MenuItem>
+              <MenuItem onClick={this.handleClose} component={Link} to="/login">Login</MenuItem>
+              </Menu>         */}
+
+            {/* Logout */}
+            {sessionStorage.getItem('userId') ?                 
+            (<IconButton className={classes.menuButton} color="inherit" aria-label="Menu" component={Link} to="/logout">
+              <Close onClick={this.props.logout}/>
+            </IconButton> ): null}
+          </Toolbar>
         </AppBar>
       </div>
     )

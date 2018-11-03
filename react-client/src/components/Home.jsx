@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Link, Switch, withRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Switch, withRouter, Router } from 'react-router-dom';
 import MapContainer from './MapContainer.jsx';
 import PrivateHeader from './PrivateHeader.jsx';
+import PublicHeader from './PublicHeader.jsx';
 import Navigation from './Navigation.jsx';
 import Redirector from './Redirector.jsx';
 
@@ -10,19 +11,20 @@ const Home = (props) => {
   if (sessionStorage.getItem('userId')) {
     return (
       <div>
-          <Navigation username={props.username} logout={props.logout} {...props}/>
-          <div className = 'main'>
-      <BrowserRouter>
-            <Switch> 
-              <Route path='/map/private' >
-                <PrivateHeader getPrivate={props.getPrivate}/>
-              </Route>
-              <Route path='/map/public'>
-                {/*props.getPublic() ? '' : ''*/''}
-              </Route>
-            </Switch>
-      </BrowserRouter>
-            <MapContainer {...props} favorites={props.favorites}/>
+        <Navigation navigateTo={props.navigateTo} location={props.location} username={props.username} logout={props.logout} {...props}/>
+        <div className = 'main'>
+          {/* {props.location === 'private' 
+            ? <PrivateHeader getPrivate={props.getPrivate} location={props.location}/>
+            : <PublicHeader getPublic={props.getPublic} location={props.location}/>} */}
+          <Switch>
+            <Route path='/map/private'>
+              <PrivateHeader getPrivate={props.getPrivate} location={props.location}/>
+            </Route>
+            <Route path='/map/public'> 
+              <PublicHeader getPublic={props.getPublic} location={props.location}/>
+            </Route>
+          </Switch>
+          <MapContainer {...props} favorites={props.favorites}/>
         </div>
       </div>
     )

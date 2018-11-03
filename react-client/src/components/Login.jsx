@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import {Link} from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -47,6 +49,7 @@ class Login extends Component {
         </div>
         <input className='log-in-submit' type='submit' value='Submit'/>
         </form>
+        <IconButton className='signup-btn' component={Link} to='/signup'>Sign Up</IconButton>
       </div>
     )
   }
