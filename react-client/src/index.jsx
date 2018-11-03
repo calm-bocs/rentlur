@@ -181,6 +181,7 @@ class App extends React.Component {
   }
 
   storeFavorite(favorite) {
+    console.log('Attempting to store favorite:', favorite)
     axios.post('/api/favorites', favorite)
       .then(() => this.favoritesUser())
       .catch(err => console.error(err));

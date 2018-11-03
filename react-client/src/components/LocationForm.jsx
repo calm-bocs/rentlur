@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Geocode from "react-geocode";
-import config from '../../config.js';
+import config from '../../../config.js';
 
 const API_KEY = config.MAPS_API_KEY;
 
@@ -26,7 +26,7 @@ class LocationForm extends Component {
       response => {
         const { lat, lng } = response.results[0].geometry.location;
         this.setState({ latitude: lat, longitude: lng }, () =>
-          console.log(this.state)
+          this.props.storeFavorite(this.state)
         );
       },
       error => {
