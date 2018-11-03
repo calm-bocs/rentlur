@@ -36,14 +36,16 @@ class Signup extends Component {
 
   render() {
     return (
-      <div className='signup-block'>
-        <div className='signup-sign'>Signup</div>
-        <form onSubmit={this.handleSubmit}>
-          <input type='username' name='username' value={this.state.username} onChange={this.onChange} placeholder= 'username'/> <br/>
-          <input type='password' name='password' value={this.state.password} onChange={this.onChange} placeholder= 'password'/> <br/>
-          <input className='sign-up-submit' type='submit' value='Submit'/>
-        </form>
-        <IconButton className='login-btn' component={Link} to='/login'>Log In</IconButton>
+      <div id="login-grid">
+        <div id="login" className='signup-block'>
+          <div className='signup-sign'>Signup</div>
+          <form onSubmit={this.handleSubmit}>
+            <input className="signup-input" type='username' name='username' value={this.state.username} onChange={this.onChange} placeholder= 'username'/> <br/>
+            <input className="signup-input" type='password' name='password' value={this.state.password} onChange={this.onChange} placeholder= 'password'/> <br/>
+            <input className='sign-up-submit' type='submit' value='Submit'/>
+          </form>
+          <IconButton className='login-btn' component={Link} to='/login'>Log In</IconButton>
+        </div>
       </div>
     )
   }
