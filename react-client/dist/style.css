@@ -100,6 +100,7 @@ button {
   margin-left: 35%;
   margin-right: 35%;
   padding: 50px;
+  background-color: rgba(245, 245, 245, 0.9) ;
 }
 .signup-sign {
   text-align: center;
@@ -116,6 +117,7 @@ button {
   margin-right: 35%;
   padding: 50px;
   transition: 400ms ease all;
+  background-color: rgba(245, 245, 245, 0.9) ;
 }
 .login-sign {
   text-align: center;
@@ -234,7 +236,7 @@ body {
   grid-template-areas: 
     "1 2 3"
     "login login login"
-    "7 8 9";
+    "7 signup 9";
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 }
@@ -243,7 +245,18 @@ body {
   grid-area: login;
 }
 
+#signup{
+  grid-area: signup;
+}
+
 @keyframes fadeIn {
   0% {opacity: 0;}
   100% {opacity: 1;}
+}
+
+.login-input {
+  background-color: white;
+}
+.signup-input {
+  background-color: white;
 }
