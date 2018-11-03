@@ -36,7 +36,11 @@ class LocationForm extends Component {
   }
 
   handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    if (e.target.name === 'public') {
+      this.setState({public: !this.state.public})
+    } else {
+      this.setState({ [e.target.name]: e.target.value });
+    }
   }
 
   handleSubmit(e) {
@@ -80,6 +84,16 @@ class LocationForm extends Component {
             name="category"
             onChange={this.handleChange}
             required
+          />
+        </label>
+        <br />
+        <label>
+          Allow Public Viewing:
+          <input
+            type='checkbox'
+            name='public'
+            value={this.state.public}
+            onChange={this.handleChange}
           />
         </label>
         <br />
