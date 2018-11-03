@@ -56,7 +56,7 @@ class MapContainer extends React.Component {
     }
     return (
       <div className='mapholder'>
-        <Map
+        <Map 
           google={this.props.google}
           zoom={11}
           style={style}
