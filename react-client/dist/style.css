@@ -85,7 +85,7 @@ button {
 	padding: 5px;
 	width: 100px;
 	color: white;
-  background-color: #91abff;    
+  background-color: #91abff;
 	border-radius: 8px;
 	transition: 400ms ease all;
   cursor: pointer;
@@ -124,8 +124,22 @@ button {
 }
 
 .main {
-  margin-left: 10%;
-  margin-right: 10%;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: 1;
+}
+
+.mapholder {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+}
+
+.addySearch {
+  margin-top: 10px;
+  margin-left: 10px;
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
 .nav-bar {
@@ -152,4 +166,9 @@ button {
   margin-right: 30%;
   padding: 50px;
   transition: 400ms ease all;
+}
+
+.delete-btn {
+  background-color: red;
+  font-weight: 1.1em;
 }

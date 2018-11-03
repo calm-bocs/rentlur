@@ -1,59 +1,48 @@
-import React from 'react';
-import axios from 'axios';
+import React, {Component} from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import {Link} from 'react-router-dom';
 
-class Signup extends React.Component {
+class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      email: '',
       username: '',
       password: ''
     }
-
-    this.onUserChange =this.onUserChange.bind(this);
-    this.onPssChange =this.onPssChange.bind(this);
+    this.onChange =this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  onUserChange(e) {
+  onChange(event) {
     this.setState({
-      username: e.target.value
+      [event.target.name]: event.target.value
     });
   }
-  onPssChange(e) {
+
+  reset () {
     this.setState({
-      password: e.target.value
+      username: '',
+      password: ''
     });
   }
 
-// makes user in db if user does not exist
-  handleSubmit(e) {
-    axios.post('/api/signup', {username: this.state.username, password: this.state.password})
-    .then ((response)=> {
-      if (response.data.name) {
-        alert('username exists!');
-      } else {
-        alert('sign up successful!');
-        //redirects to login in success
-        this.props.history.push('/login')
-      }
-    });
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.signup(this.state.username, this.state.password, this.props.history);
+    this.reset();
   }
 
-
-  
 
   render() {
     return (
       <div className='signup-block'>
         <div className='signup-sign'>Signup</div>
         <form onSubmit={this.handleSubmit}>
-          <input type='username' value={this.state.username} onChange={this.onUserChange} placeholder= 'username'/> <br/>
-          <input type='password'  value={this.state.password} onChange={this.onPssChange} placeholder= 'password'/> <br/>
+          <input type='username' name='username' value={this.state.username} onChange={this.onChange} placeholder= 'username'/> <br/>
+          <input type='password' name='password' value={this.state.password} onChange={this.onChange} placeholder= 'password'/> <br/>
           <input className='sign-up-submit' type='submit' value='Submit'/>
         </form>
+        <IconButton className='login-btn' component={Link} to='/login'>Log In</IconButton>
       </div>
     )
   }

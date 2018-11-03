@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import {Link} from 'react-router-dom';
 
-class Login extends React.Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -8,29 +10,27 @@ class Login extends React.Component {
       password: '',
     };
 
-    this.onUserChange = this.onUserChange.bind(this);
-    this.onPassChange = this.onPassChange.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
-  onUserChange(e) {
+  onChange(event) {
     this.setState({
-      username: e.target.value
+      [event.target.name]: event.target.value
     });
   }
 
-  onPassChange(e) {
-    this.setState({
-      password: e.target.value
-    });
-  }
-  
-// on submit redirects to results page
   handleSubmit(e) {
-    this.props.login(this.state.username, this.state.password);
     e.preventDefault();
-    this.props.history.push('/');
+    this.props.login(this.state.username, this.state.password, this.props.history);
+    this.reset();
+  }
+
+  reset () {
+    this.setState({
+      username: '',
+      password: ''
+    });
   }
 
 
@@ -38,15 +38,16 @@ class Login extends React.Component {
     return (
       <div className='login-block'>
       <form onSubmit={this.handleSubmit}>
-        <div className='login-sign'>Login</div>
-          <div>
-            <input type='username' value={this.state.username} onChange={this.onUserChange} placeholder='username'/>
-          </div>
-          <div>
-            <input type= "password" value={this.state.password} onChange={this.onPassChange} placeholder='password'/>
-          </div>
-          <input className='log-in-submit' type='submit' value='Submit'/>
+      <div className='login-sign'>Login</div>
+        <div>
+          <input type='username' name='username' value={this.state.username} onChange={this.onChange} placeholder='username'/>
+        </div>
+        <div>
+          <input type= "password" name='password' value={this.state.password} onChange={this.onChange} placeholder='password'/>
+        </div>
+        <input className='log-in-submit' type='submit' value='Submit'/>
         </form>
+        <IconButton className='signup-btn' component={Link} to='/signup'>Sign Up</IconButton>
       </div>
     )
   }

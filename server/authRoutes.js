@@ -1,63 +1,67 @@
 const express = require("express");
-const router = express.Router();
+const authRouter = express.Router();
 const cookieParser = require("cookie-parser");
 //const keys = require("../credentials").web;
-const expressLogging = require("express-logging");
-const logger = require("logops");
 const passport = require("passport");
-const session = require("express-session");
+// moved to top-level server file
+// const session = require("express-session");
 const bcrypt = require("bcrypt");
 const getConnection = require("./database.js").getConnection;
 const knex = getConnection();
-require("./auth");
+require("./auth.js");
 
 // authentication
-router.use(passport.initialize());
-router.use(passport.session());
-router.use(expressLogging(logger));
+authRouter.use(passport.initialize());
+authRouter.use(passport.session());
 
-router.use(cookieParser());
-router.use(
-  session({
-    secret: "MemesAreCool",
-    resave: false,
-    saveUninitialized: true
-  })
-);
+authRouter.use(cookieParser());
 
-router.post("/login", passport.authenticate("local"), (req, res) => {
+// session moved to top-level server file
+// router.use(
+//   session({
+//     secret: "something normal",
+//     resave: false,
+//     saveUninitialized: true
+//   })
+// );
+
+authRouter.post("/login", passport.authenticate("local"), (req, res) => {
   if ((req.authInfo.confirmation = "success")) {
+    req.session.regenerate(function() {
+      req.session.userid = req.authInfo.result.id;
+    })
     res.send({ data: req.authInfo.result });
   } else {
-    console.log("Failure to authenticate");
-
     res.send({ data: "Failure" });
   }
 });
 
-router.get("/logout", (req, res) => {
+authRouter.get("/logout", (req, res) => {
   console.log("requested to logout");
+  // changes this to properly destroy session
   req.logout();
   res.redirect("/");
 });
 
-router.post("/signup", (req, res) => {
+authRouter.post("/signup", (req, res) => {
   console.log("requested to signup");
   let password = req.body.password;
   let username = req.body.username;
-  bcrypt.hash(password, 10, function(err, hash) {
-    //puit in db
+  bcrypt.hash(password, 10, (err, hash) => {
     if (err) {
-      console.log(err);
-      return;
+      console.log(`error hasing password:`, err);
+      res.status(500).send('error hashing password:', err);
     }
-    console.log("encrypting password: ", password);
     knex("users")
       .insert([{ username: username, password: hash }])
-      .then(res => res.send(JSON.stringify(res)))
-      .catch(err => res.send(JSON.stringify(err)));
-  });
-  // res.end();
+      .returning('id')
+      .then(data => 
+        res.send(data))
+      .catch(err => {
+        console.log(`error message`, err)
+        res.status(400).send(err);
+      })
+    });
 });
 
-module.exports = router;
+module.exports = authRouter;
