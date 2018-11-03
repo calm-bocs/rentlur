@@ -260,3 +260,11 @@ body {
 .signup-input {
   background-color: white;
 }
+
+:hover.login-btn{
+  border-radius: 0;
+}
+
+:hover.signup-btn{
+  border-radius: 0;
+}

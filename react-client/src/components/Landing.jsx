@@ -4,8 +4,8 @@ import IconButton from '@material-ui/core/IconButton';
 
 const Landing = (props) => (
   <div id="grid">
-    Landing Page Dummy
     <div id="e">
+    <p id="e1">Find Your Favorite Places</p>
     {sessionStorage.getItem('userId') ? <IconButton className='main-btn' component={Link} to='/map/private'>Main Page</IconButton>
       : <IconButton  id="e2" className='login-btn' component={Link} to='/login'>Log In</IconButton>}
     {sessionStorage.getItem('userId') ? <IconButton className='logout-btn' onClick={props.logout} component={Link} to='/logout'>Log Out</IconButton>
