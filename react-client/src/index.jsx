@@ -53,6 +53,7 @@ class App extends React.Component {
     // additional bindings for addFavorite, deleteFavorite, filterFavoritesByCategory, etc. once those functions are built out
     this.navigateTo = this.navigateTo.bind(this);
     this.storeFavorite = this.storeFavorite.bind(this);
+    this.deleteFavorite = this.deleteFavorite.bind(this);
   }
  
 
@@ -187,6 +188,10 @@ class App extends React.Component {
       .catch(err => console.error(err));
   }
 
+  deleteFavorite(favId) {
+    console.log(`Attempting to delete favorite ${favId}`);
+  }
+
   // this will all be refactored, likely according to the plan outlined at the top of the document
   render() {
     return (
@@ -212,6 +217,7 @@ class App extends React.Component {
             path='/map'
             render={(props) => (
                 <Home {...props}
+                  deleteFavorite={this.deleteFavorite}
                   favorites={this.state.favorites} 
                   getPublic={this.favoritesPublic}
                   getPrivate={this.favoritesUser}

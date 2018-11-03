@@ -74,8 +74,9 @@ class MapContainer extends React.Component {
               className='info-window'
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
+              onClick={e => console.log(e.target)}
               >
-                <InfoBox activeData={this.state.activeData} />
+                <InfoBox activeData={this.state.activeData} deleteFavorite={this.props.deleteFavorite}/>
           </InfoWindow>
         </Map>
       </div>

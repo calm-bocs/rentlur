@@ -1,7 +1,8 @@
 import React from 'react';
 
-const InfoBox = (props) => (
-  <div className='info-box'>
+const InfoBox = (props) => {
+  console.log('Rendering infobox');
+  return (<div className='info-box'>
     <span className='info-type'>Location:</span>
     <br />
     <span className='info-address'>{props.activeData.location}</span>
@@ -10,8 +11,8 @@ const InfoBox = (props) => (
     <br />
     <span className='info-description'>{props.activeData.description}</span>
     {/* <br />
-    <button className='delete-btn'>Delete</button> */}
-  </div>
-)
+    <button className='delete-btn' onClick={(e) => console.log('clicked delete button')}>Delete</button> */}
+  </div>)
+}
 
 export default InfoBox;
