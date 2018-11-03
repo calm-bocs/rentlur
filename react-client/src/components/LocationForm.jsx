@@ -37,7 +37,7 @@ class LocationForm extends Component {
 
   handleChange(e) {
     if (e.target.name === 'public') {
-      this.setState({public: !this.state.public})
+      this.setState({public: e.target.checked})
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
@@ -92,7 +92,7 @@ class LocationForm extends Component {
           <input
             type='checkbox'
             name='public'
-            value={this.state.public}
+            checked={this.state.public}
             onChange={this.handleChange}
           />
         </label>
