@@ -1,31 +1,22 @@
 const express = require('express');
 const { User, Favorite } = require('../models/schema');
 const dbRouter = express.Router();
-//dotenv allows access to .env files when deploying
-//require('dotenv').config()
 
-function restrict(req, res, next) {
-  if (req.session.passport.user) {
-    next();
-  } else {
-    console.log('Access denied!');
-    // redirect to landing page properly
-    res.redirect('/');
-  }
-}
+// function restrict(req, res, next) {
+//   if (req.session.passport.user) {
+//     next();
+//   } else {
+//     console.log('Access denied!');
+//     // redirect to landing page properly
+//     res.redirect('/');
+//   }
+// }
 
-dbRouter.use(restrict);
+// dbRouter.use(restrict);
 
 
-// MAKE SURE THAT ALL OF THESE ROUTES ARE PROTECTED/REQUIRES A SESSION
-/*
-queries the user table for an id contained in the session
-  then grabs the favorites that share that id and returns them in an array
-*/
-// once session is working, re-add if/else statement
-// cahnge function to not return entire result including hashed password
 dbRouter.get('/', async (req, res) => {
-  console.log(`in database get favorites by user query`)  
+  console.log(`in database get favorites by user query`)
   try {
     const user = await User.query().where('username', req.session.passport.user)
     const favorites = await user[0].$relatedQuery('favorite')
@@ -37,10 +28,9 @@ dbRouter.get('/', async (req, res) => {
   }
 });
 
-//  return all results from favorites marked public
 dbRouter.get('/public', (req, res) => {
     Favorite.query().where('public', true)
-    .then(result => 
+    .then(result =>
       res.status(200).json(result))
     .catch(err => {
       console.log(`error in dbRoute get public favorites: ${err}`)
@@ -58,16 +48,24 @@ sends a query to check for the user id
   only allows insert of the named properties
 */
 dbRouter.post('/', async (req, res) => {
-  try {
-    // await user.$relatedQuery('favorite')
-    // .allowInsert('[pid, location, title, price, url, hasPic, date, category]')
-    // .insert(req.body);
-    res.status(201).send('post successful');
-  }
-  catch (err) {
-    console.log(`error in dbRoute post new favorite: ${err}`);
-    res.sendStatus(500);
-  }
+    const newFavorite = req.body;
+    try{
+      const user = await User.query().where('username', req.session.passport.user)
+      const user_id = user[0].id
+      await Favorite.query().insert({
+        location: newFavorite.address,
+        description: newFavorite.description,
+        category: newFavorite.category,
+        public: newFavorite.public,
+        coordinates: JSON.stringify({latitude: newFavorite.latitude, longitude: newFavorite.longitude}),
+        user_id
+      })
+      res.status(201).send('post successful');
+    }
+    catch (err) {
+      console.log(`error in dbRoute post new favorite for user: ${err}`);
+      res.sendStatus(500);
+    }
 });
 
 
