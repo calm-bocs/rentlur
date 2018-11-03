@@ -18,7 +18,7 @@ const Home = (props) => {
             : <PublicHeader getPublic={props.getPublic} location={props.location}/>} */}
           <Switch>
             <Route path='/map/private'>
-              <PrivateHeader getPrivate={props.getPrivate} location={props.location}/>
+              <PrivateHeader storeFavorite={props.storeFavorite} getPrivate={props.getPrivate} location={props.location}/>
             </Route>
             <Route path='/map/public'> 
               <PublicHeader getPublic={props.getPublic} location={props.location}/>

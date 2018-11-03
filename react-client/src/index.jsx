@@ -52,6 +52,7 @@ class App extends React.Component {
     this.favoritesUser = this.favoritesUser.bind(this);
     // additional bindings for addFavorite, deleteFavorite, filterFavoritesByCategory, etc. once those functions are built out
     this.navigateTo = this.navigateTo.bind(this);
+    this.storeFavorite = this.storeFavorite.bind(this);
   }
  
 
@@ -145,40 +146,46 @@ class App extends React.Component {
   //   }
   // }
 
-    navigateTo(location, history) {
-      let app = this;
-      if(location === 'public') {
-        this.setState({location: 'public'});
-        history.push('/map/public');
-      }
-      if(location === 'private') {
-        this.setState({location: 'private'})
-        history.push('/map/private')
-      }
+  navigateTo(location, history) {
+    let app = this;
+    if(location === 'public') {
+      this.setState({location: 'public'});
+      history.push('/map/public');
     }
+    if(location === 'private') {
+      this.setState({location: 'private'})
+      history.push('/map/private')
+    }
+  }
 
-    favoritesPublic() {
+  favoritesPublic() {
     console.log(`making call to server route api/properties/public`);
-      axios.get(`/api/favorites/public`)
+    axios.get(`/api/favorites/public`)
       .then(response => {
         console.log(`result returned from call to db for public favorites: `, response.data);
         this.setState({favorites: response.data})  
       })
       .catch(err => console.log(err));
-    }
+  }
 
-    favoritesUser() {
-      console.log(`making call to server route api/properties/`);
-        axios.get(`/api/favorites/`)
-        .then(response => {
-          console.log(`result returned from call to db for user favorites:`, response.data);
-          this.setState({favorites: response.data}, () => {
-            console.log('Favorites changed, new favorites:', this.state.favorites)
-          })
+  favoritesUser() {
+    console.log(`making call to server route api/properties/`);
+    axios.get(`/api/favorites/`)
+      .then(response => {
+        console.log(`result returned from call to db for user favorites:`, response.data);
+        this.setState({favorites: response.data}, () => {
+          console.log('Favorites changed, new favorites:', this.state.favorites)
         })
-        .catch(err => console.log(err));
-      }
+      })
+      .catch(err => console.log(err));
+  }
 
+  storeFavorite(favorite) {
+    console.log('Attempting to store favorite:', favorite)
+    axios.post('/api/favorites', favorite)
+      .then(() => this.favoritesUser())
+      .catch(err => console.error(err));
+  }
 
   // this will all be refactored, likely according to the plan outlined at the top of the document
   render() {
@@ -211,7 +218,8 @@ class App extends React.Component {
                   logout={this.logout}
                   username={this.state.username}
                   navigateTo={this.navigateTo}
-                  location={this.state.location}/>
+                  location={this.state.location}
+                  storeFavorite={this.storeFavorite}/>
               )}
             />
 

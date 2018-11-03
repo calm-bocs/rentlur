@@ -1,4 +1,5 @@
 import React from 'react';
+import LocationForm from './LocationForm.jsx';
 
 class PrivateHeader extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class PrivateHeader extends React.Component {
   }
 
   render() {
-    return <div>Eventually A Form Maybe</div>
+    return <LocationForm storeFavorite={this.props.storeFavorite}/>
   }
 }
 
