@@ -61,6 +61,7 @@ dbRouter.post('/', async (req, res) => {
 });
 
 dbRouter.delete('/', async(req, res) => {
+  console.log(req.body);
   //Find ID - req.body?
   const id = undefined //SOMETHING
   try {
@@ -77,7 +78,7 @@ dbRouter.delete('/', async(req, res) => {
     res.status(201).send('Deletion successful');
   } 
   catch (err) {
-    console.log('Error in DB removal: ' + err.message);
+    console.log(`Error in DB removal "${err.name}": ${err.message}`);
     res.sendStatus(500);
   }
 })
