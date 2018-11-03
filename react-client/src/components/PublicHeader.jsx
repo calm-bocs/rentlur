@@ -10,7 +10,7 @@ class PublicHeader extends React.Component {
   }
 
   render() {
-    return <div>Something Different From The Private</div>
+    return <div className='addySearch'>Viewing Public Favorites</div>
   }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import config from '../../../config.js';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import InfoBox from './InfoBox.jsx';
 const API_KEY = config.MAPS_API_KEY;
 
 class MapContainer extends React.Component {
@@ -15,7 +16,7 @@ class MapContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    console.log('rendered map');
   }
 
   fetchData() {
@@ -25,6 +26,12 @@ class MapContainer extends React.Component {
     console.log('Current active: ', this.state.activeData);
     console.log('Clicked marker:', props.data)
     this.setState({activeMarker: marker, showingInfoWindow: true, activeData: props.data})
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.location !== this.props.location) {
+      this.setState({showingInfoWindow: false});
+    }
   }
 
   render() {
@@ -49,7 +56,7 @@ class MapContainer extends React.Component {
     }
     return (
       <div className='mapholder'>
-        <Map
+        <Map 
           google={this.props.google}
           zoom={11}
           style={style}
@@ -67,7 +74,7 @@ class MapContainer extends React.Component {
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
               >
-                <span>{this.state.activeData.description}</span>
+                <InfoBox activeData={this.state.activeData} />
           </InfoWindow>
         </Map>
       </div>
