@@ -81,7 +81,7 @@ class App extends React.Component {
       console.log(`error received while trying to sign up: ${err}`)
     })
     }
-  
+
 
   // need to update success case to redirect to home page
   login(username, password, history) {
@@ -191,9 +191,10 @@ class App extends React.Component {
 
   deleteFavorite(favId) {
     console.log(`Attempting to delete favorite ${favId}`);
+    axios.delete('/api/favorites', favId)
+      .then(() => this.favoritesUser())
+      .catch(err => console.log(err));
   }
-
-  // this will all be refactored, likely according to the plan outlined at the top of the document
 
   render() {
     return (
@@ -219,7 +220,7 @@ class App extends React.Component {
             render={(props) => (
                 <Home {...props}
                   deleteFavorite={this.deleteFavorite}
-                  favorites={this.state.favorites} 
+                  favorites={this.state.favorites}
                   getPublic={this.favoritesPublic}
                   getPrivate={this.favoritesUser}
                   logout={this.logout}
