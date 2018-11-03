@@ -77,9 +77,11 @@ class MapContainer extends React.Component {
               data={marker}>
             </Marker>)
           )}
-          <InfoWindow
+          <InfoWindow 
+              className='info-window'
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
+              onClick={e => console.log(e.target)}
               >
               <div>
                 <InfoBox activeData={this.state.activeData} />
